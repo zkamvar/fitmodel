@@ -11,6 +11,7 @@ the GNU public licence.  See http://www.opensource.org for details.
 */
 
 
+#include "config.h"
 #include "utilities.h"
 #include "free.h"
 
@@ -221,11 +222,9 @@ void Free_Tree_Lk(arbre *tree)
 {
   int i;
   edge *b;
-  node *n;
-
+  
   b = NULL;
-  n = NULL;
-
+  
   Free(tree->site_loglk_sorted);
   Free(tree->site_lk);
   Free(tree->w_patt);

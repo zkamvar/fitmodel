@@ -10,6 +10,7 @@ the GNU public licence.  See http://www.opensource.org for details.
 
 */
 
+#include "config.h"
 #include "utilities.h"
 #include "lk.h"
 #include "optimiz.h"
@@ -199,12 +200,8 @@ void Get_All_Partial_Lk(arbre *tree, edge *b_fcus, node *a, node *d)
   fit_double ****p_lk,****p_lk_v1,****p_lk_v2;
   int catg,catq,site;
   fit_double ****Pij1,****Pij2;
-  fit_double max_prob;
-  int max_pos;
-
-  max_prob = .0;
-  max_pos  = -1;
-
+  
+  
   if(d->tax) return;
   else
     {
@@ -565,7 +562,6 @@ void Site_Lk_Codon(arbre *tree, allseq *alldata)
   fit_double log_site_lk,site_lk;
   fit_double site_lk_level_1,site_lk_level_2, site_lk_level_3,site_lk_level_4;
   edge *eroot;
-  int is_ambigu;
   int catq, catg;
   int state_elsewhere;
   fit_double site_lk_cat[30];
@@ -576,7 +572,6 @@ void Site_Lk_Codon(arbre *tree, allseq *alldata)
 
   eroot = tree->noeud[0]->b[0];
     
-  is_ambigu = alldata->ambigu[tree->curr_site];
   
   state_elsewhere = tree->data->invar[tree->curr_site];
   
@@ -760,10 +755,7 @@ fit_double Lk_At_Given_Edge_Codon(arbre *tree, edge *b_fcus)
   fit_double site_lk,log_site_lk;
   fit_double site_lk_level_1,site_lk_level_2, site_lk_level_3,site_lk_level_4;
   fit_double rr,len;
-  int edge_num;
-
   
-  edge_num = b_fcus->num;
   tree->tot_loglk = log_site_lk = .0;
 
   if(b_fcus->l < BL_MIN) b_fcus->l = BL_MIN;
@@ -1060,13 +1052,9 @@ fit_double Lk_At_Given_Edge_Nt_AA(arbre *tree, edge *b_fcus)
   fit_double site_lk,log_site_lk;
   fit_double site_lk_level_1,site_lk_level_2, site_lk_level_3,site_lk_level_4;
   fit_double rr,len;
-  int edge_num;
-  
-  
-  edge_num = b_fcus->num;
+    
   tree->tot_loglk = log_site_lk = .0;
-  
-  
+    
   if(b_fcus->l < BL_MIN) b_fcus->l = BL_MIN;
   if(b_fcus->l > BL_MAX) b_fcus->l = BL_MAX;
   
@@ -1901,15 +1889,12 @@ fit_double Unscaled_Dwell_S1(int beg, int mid, int end, edge *b, arbre *tree)
 
   fit_double tta;
   fit_double bl;
-  fit_double pbeg, pmid, pend;
-  fit_double expttabl;
-
+  fit_double pmid, pend;
+  
   bl = b->l;
   tta = b->qmat_struct->theta[0];
-  pbeg = b->qmat_struct->omega_proba[beg];
   pmid = b->qmat_struct->omega_proba[mid];
   pend = b->qmat_struct->omega_proba[end];
-  expttabl = (fit_double)exp(-tta*bl);
   if((beg == mid) && (mid == end))
     {
       return
@@ -2011,13 +1996,9 @@ void Compute_All_Dwell_Probs_S2(edge *b_fcus,qmat *qmat_struct,arbre *tree)
 void Compute_Pmat_S2(fit_double l, fit_double **Pij, qmat *qmat_struct, arbre *tree)
 {
     int i,j,k;
-    int n,neg,dim1,dim2;
+    int n,neg;
     fit_double *U, *V, *R;
     fit_double *expt, *uexpt;
-
-
-    dim2 = tree->mod->n_omega*tree->mod->n_omega;
-    dim1 = tree->mod->n_omega;
 
     n = tree->mod->n_omega;
     
@@ -2542,14 +2523,12 @@ void Compute_Proba_Omega_On_One_Edge_At_One_Site(edge *b, fit_double *postprob, 
 
   fit_double site_lk;
   int i,j,k,l;
-  int ns,nomega;
+  int nomega;
   fit_double sum;
 
   nomega = tree->mod->n_omega;
 
 /*   For(i,nomega) postprob[i] = Compute_Proba_Omega_At_One_Spot_At_One_Site(b,0.5,i,tree->curr_site,tree); */
-      
-  ns = tree->mod->ns;
 
   site_lk = (fit_double)exp(tree->site_lk[tree->curr_site]);
 

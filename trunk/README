@@ -1,3 +1,11 @@
+
+Install the 'Fitmodel' by typing the following commands in a terminal window:
+
+./configure;
+make clean;
+make;
+
+
 'Fitmodel' estimates the  parameters of various codon-based models  of substitution, including those
 described in  Guindon, Rodrigo, Dyer and Huelsenbeck  (2004). These models are  especially useful as
 they accommodate site-specific switches between selection  regimes without a priori knowledge of the
@@ -24,22 +32,13 @@ branch with label  0.0 means that w1  is the most probable class,  0.5 indicates
 probable and 1.0 means that w3 has the highest posterior probability.
 
 Processing those  results manually  can be  very tedious.  The  program 'treeview'  reads 'fitmodel'
-output file  and generates a postscript  file which displays the  phylogeny at each  codon site with
+output file  and generates a postscript  file which displays the  phylogeny at each codon  site with
 different colors on edges depending on the posterior probabilities estimated on each branch, at each
-site (see file p1.pdf).   This is very useful to detect site  specific changes of selection regimes.
-To compile 'treeview' on UNIX-like systems, apply the following changes to the file 'Makefile' :
-
-PROG = FITMODELEXEC = fitmodel
-# PROG = TREEVIEW# EXEC = treeview
-
-changes to:
-
-#PROG = FITMODEL#EXEC = fitmodel
-PROG = TREEVIEWEXEC = treeview
-
-Then type 'make  clean' and 'make'. This will  generate the binary for 'treeview'.   'treeview' is a
-command-line program that  takes as first argument 'fitmodel' output tree  file. The second argument
-is the name of the postscript file where the trees will be written.
+site (see file p1.pdf).   This is very useful to detect site specific  changes of selection regimes.
+To  compile 'treeview'  on  UNIX-like  systems, simply  type  './configure  --enable-treeview' in  a
+terminal window.  Then type  'make clean' and 'make'. This will generate  the binary for 'treeview'.
+'treeview' is a command-line  program that takes as first argument 'fitmodel'  output tree file. The
+second argument is the name of the postscript file where the trees will be written.
 
 Need more help? Contact me: s.guindon@auckland.ac.nz
 
