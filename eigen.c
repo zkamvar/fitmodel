@@ -1,3 +1,4 @@
+#include "config.h"
 #include "utilities.h"
 #include "eigen.h"
 
@@ -462,14 +463,13 @@ int cmatinv( complex *x, int n, int m, fit_double *space)
 */
    int i,j,k, *irow=(int*) space;
    fit_double xmaxsize, ee=1e-20;
-   complex xmax, t,t1;
+   complex t,t1;
 
    For(i,n)  {
        xmaxsize = 0.;
        for (j=i; j<n; j++) {
           if ( xmaxsize < csize (x[j*m+i]))  {
                xmaxsize = csize (x[j*m+i]);
-               xmax = x[j*m+i];
                irow[i] = j;
           }
        }

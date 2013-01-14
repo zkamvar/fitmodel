@@ -10,6 +10,7 @@ the GNU public licence.  See http://www.opensource.org for details.
 
 */
 
+#include "config.h"
 #include "utilities.h"
 #include "options.h"
 #include "free.h"
@@ -33,8 +34,7 @@ option *Get_Input(int argc, char **argv)
   char choix;
   char *s, *buff;
   int n_trial;
-  char *n_data_sets;
-
+  
   input = NULL;
 
   s     = (char *)mCalloc(T_MAX_LINE,sizeof(char));
@@ -42,7 +42,6 @@ option *Get_Input(int argc, char **argv)
 
 
   putchar('\n');
-  n_data_sets                      = NULL;
   input                            = (option *)mCalloc(1,sizeof(option));
   input->fp_seq                    = NULL;
   input->fp_tree                   = NULL;
@@ -2529,12 +2528,10 @@ void Open_Output_Files(option *input,char *seqfile)
   
   char answer, *file_name;
   int n_trial;
-  int pid;
   
   file_name = (char *)mCalloc(T_MAX_FILE,sizeof(char));
 
-  pid = (int)getpid();
-
+  
   strcpy(input->output_stat_file,input->seqfile);
   strcpy(input->output_tree_file,input->seqfile);
   

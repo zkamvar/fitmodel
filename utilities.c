@@ -11,6 +11,7 @@ the GNU public licence.  See http://www.opensource.org for details.
 */
 
 
+#include "config.h"
 #include "utilities.h"
 #include "lk.h"
 #include "optimiz.h"
@@ -890,14 +891,9 @@ void Make_Edge_Lk(node *a, node *d, edge *b, arbre *tree)
   /* Allocate the matrix of change probabilities in the edge connecting nodes a & d */
 
   int i,j,k;
-  int len;
   int n_catq, n_catg;
 
-
-  len = (int)tree->data->crunch_len;
-
   b->diff_lk   = 0.0;
-
 
   n_catq = tree->mod->n_catq;
   n_catg = tree->mod->n_catg;
@@ -5633,8 +5629,7 @@ void Estimate_Ancestral_States_Post_Codon(node *a, node *d, edge *b, arbre *tree
             fit_double *site_lk;
             fit_double ****p_lk_a,****p_lk_d;
             fit_double max_p;
-            int best_state;
-
+            
             site_lk = (fit_double *)mCalloc(tree->mod->ns,sizeof(fit_double));
 
             p_lk_a = (b->left == a)?(b->p_lk_left):(b->p_lk_rght);
@@ -5665,14 +5660,12 @@ void Estimate_Ancestral_States_Post_Codon(node *a, node *d, edge *b, arbre *tree
                                 }
                         }
                     
-                    best_state = -1;
                     max_p      = -1.0;
                     For(k,tree->mod->ns)
                         {
                             if(site_lk[k] * tree->mod->pi[k%tree->mod->ns_codon] > max_p)
                                 {
                                     max_p = site_lk[k] * tree->mod->pi[k%tree->mod->ns_codon];
-                                    best_state = k;
                                 }
                         }
                 }
@@ -5696,7 +5689,6 @@ void Estimate_Ancestral_States_Post_NtAA(node *a, node *d, edge *b, arbre *tree)
             fit_double *site_lk;
             fit_double ****p_lk_a,****p_lk_d;
             fit_double max_p;
-            int best_state;
 
             site_lk = (fit_double *)mCalloc(tree->mod->ns,sizeof(fit_double));
 
@@ -5725,14 +5717,12 @@ void Estimate_Ancestral_States_Post_NtAA(node *a, node *d, edge *b, arbre *tree)
                                 }
                         }
                     
-                    best_state = -1;
                     max_p      = -1.0;
                     For(k,tree->mod->ns)
                         {
                             if(site_lk[k] * tree->mod->pi[k] > max_p)
                                 {
                                     max_p = site_lk[k] * tree->mod->pi[k];
-                                    best_state = k;
                                 }
                         }
                 }

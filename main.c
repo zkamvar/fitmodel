@@ -10,6 +10,7 @@ the GNU public licence.  See http://www.opensource.org for details.
 
 */
 
+#include "config.h"
 #include "utilities.h"
 #include "lk.h"
 #include "optimiz.h"
@@ -32,7 +33,6 @@ int main(int argc, char **argv)
   model *mod;
   time_t t_beg,t_end;
   div_t hour,min;
-  int pid;
 
 
   tree = NULL;

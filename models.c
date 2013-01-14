@@ -10,6 +10,7 @@ the GNU public licence.  See http://www.opensource.org for details.
 
 */
 
+#include "config.h"
 #include "utilities.h"
 #include "models.h"
 #include "eigen.h"
@@ -30,15 +31,10 @@ int PMat_TN93(fit_double l, model *mod, fit_double **Pij)
   fit_double a1t,a2t,bt;
   fit_double A,C,G,T,R,Y;
   fit_double kappa1,kappa2;
-  int kappa_has_changed;
-
-
   
   A = mod->pi[0]; C = mod->pi[1]; G = mod->pi[2]; T = mod->pi[3];
   R = A+G;  Y = T+C;
-  
-  kappa_has_changed = 0;
-  
+    
   if(mod->kappa < .0) mod->kappa = 1.0e-5;
   
   if(mod->model_number < 5) { mod->lambda = 1.; }
@@ -51,7 +47,6 @@ int PMat_TN93(fit_double l, model *mod, fit_double **Pij)
 	  if(mod->lambda < .0)
 	    {
 	      mod->kappa += mod->kappa/10.;
-	      kappa_has_changed = 1;
 	    }
 	}while(mod->lambda < .0);
     }
@@ -1622,19 +1617,15 @@ void Update_Qmat_Codon(model *mod, qmat *qmat_struct)
   int num_codon1, num_codon2;
   int dim2,dim3;
   int n_catq;
-  fit_double *w;
   fit_double *U, *V, *Root;
-  fit_double div;
   int codon_64_i, codon_64_j;
   int cod_i, cod_j;
   
-  div = 0.0;
   
   U      = (fit_double *)mCalloc(mod->ns*mod->ns,sizeof(fit_double));
   V      = (fit_double *)mCalloc(mod->ns*mod->ns,sizeof(fit_double));
   Root   = (fit_double *)mCalloc(mod->ns,sizeof(fit_double));
   
-  w = qmat_struct->omega;
   
   n_catq   = mod->n_catq;
   dim2     = mod->ns;

@@ -11,6 +11,7 @@ the GNU public licence.  See http://www.opensource.org for details.
 */
 
 
+#include "config.h"
 #include "utilities.h"
 #include "optimiz.h"
 #include "lk.h"
@@ -331,9 +332,8 @@ fit_double Generic_Brent(fit_double *param,
   fit_double a,b,d,etemp,fu,fv,fw,fx,p,q,r,tol1,tol2,u,v,w,x,xm;
   fit_double e=0.0;
   fit_double init_loglk,max_loglk;
-  fit_double bestx,initx;
+  fit_double bestx;
 
-  initx = bx;
   d=0.0;
   a=((ax < cx) ? ax : cx);
   b=((ax > cx) ? ax : cx);
@@ -803,7 +803,6 @@ void Round_Optimize(arbre *tree, allseq *data)
 
   int n_round,each,n_passes;
   fit_double lk_old, lk_new, lk_after_br_lengths;
-  fit_double tol;
   int end_of_br_lengths, end_of_params;
   node *root;
   fit_double diff_lk;
@@ -815,10 +814,7 @@ void Round_Optimize(arbre *tree, allseq *data)
   lk_old = lk_after_br_lengths = UNLIKELY;
   n_round = 0;
   each = 0;
-  tol = 1.e-5;
   diff_lk = 1.e-5;
-/*   tol = 1.e+5; */
-/*   diff_lk = 1.e+5; */
   end_of_br_lengths = end_of_params = 0;
 
   tree->mod->tpos_ols             = 0;
@@ -1106,11 +1102,6 @@ void Optimiz_All_Free_Param(arbre *tree, int verbose)
 	  {
 	  case NO_SWITCH :
 	    {
-	      int run;
-	      
-	      run = 0;
-	      
-
 	      switch(tree->mod->subst_modelname)
 		{
 		case M2 : case M2a : case M3 : case MX :
@@ -1492,7 +1483,6 @@ void BFGS(arbre *tree,
   int check,i,its,j;
   fit_double den,fac,fad,fae,fp,stpmax,sum=0.0,sumdg,sumxi,temp,test,fret;
   fit_double *dg,*g,*hdg,**hessin,*pnew,*xi;
-  fit_double cur_f,new_f;
   hessin = (fit_double **)mCalloc(n,sizeof(fit_double *));
   For(i,n) hessin[i] = (fit_double *)mCalloc(n,sizeof(fit_double));
   dg   = (fit_double *)mCalloc(n,sizeof(fit_double ));
@@ -1506,7 +1496,6 @@ void BFGS(arbre *tree,
 
   fp=(*func)(tree);
   (*dfunc)(tree,p,n,step_size,func,g);
-  cur_f = new_f = fp;
 
   for (i=0;i<n;i++) 
     {
@@ -1520,9 +1509,7 @@ void BFGS(arbre *tree,
 
   for(its=1;its<=ITMAX;its++) 
     {
-      cur_f = tree->tot_loglk;
       lnsrch(tree,n,p,fp,g,xi,pnew,&fret,stpmax,&check);
-      new_f = tree->tot_loglk;
 
       fp = fret;
       
@@ -2824,15 +2811,11 @@ fit_double Linmin_On_A_Direction(fit_double *x,
     fit_double *xa,*xb,*xc,*xd;
     fit_double fxa,fxb,fxc,fxd,f0_old;
     fit_double golden;
-    fit_double alpha,alpha_before,alpha_after;
-    fit_double stepsize;
-    int i, n_iter,max_n_iter;
+    fit_double alpha;
+    int i, n_iter;
     fit_double *init_x;
-    fit_double magnification;
-    fit_double f_alpha_before, f_alpha_after;
 
     if(tree->verbose) printf("\n. Entrering Linmin...\n");
-
 
     xa = (fit_double *)mCalloc(n,sizeof(fit_double));
     xb = (fit_double *)mCalloc(n,sizeof(fit_double));
@@ -2845,14 +2828,6 @@ fit_double Linmin_On_A_Direction(fit_double *x,
     /* bracket a maximum */
     
     derivatives    = grad;
-    stepsize       = 1.E-6;
-    max_n_iter     = 30;
-    magnification  = 1.5;
-
-    f_alpha_before = f0;
-    f_alpha_after  = f0;
-    alpha_before   = -1.0;
-    alpha_after    = -1.0;
     alpha          = -1.0;    
 
 /*     if(tree->verbose)  */
