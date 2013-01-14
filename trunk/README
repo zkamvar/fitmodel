@@ -41,5 +41,5 @@ Then type 'make  clean' and 'make'. This will  generate the binary for 'treeview
 command-line program that  takes as first argument 'fitmodel' output tree  file. The second argument
 is the name of the postscript file where the trees will be written.
 
-Need more help? Contact me: guindon@stat.auckland.ac.nz
+Need more help? Contact me: s.guindon@auckland.ac.nz
 
