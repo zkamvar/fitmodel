@@ -282,7 +282,7 @@ int Matinv (fit_double *x, int n, int m, fit_double *space)
 
 /*********************************************************/
 
-int PMat(fit_double l, model *mod, fit_double **Pij, qmat *qmat_struct)
+int PMat(fit_double l, model *mod, fit_double **Pij, qmat *qmat_struct, arbre *tree)
 {
   if(mod->model_number < 7)
   /* Use analytical formula if the substitution 
@@ -291,7 +291,7 @@ int PMat(fit_double l, model *mod, fit_double **Pij, qmat *qmat_struct)
     return PMat_TN93(l,mod,Pij); 
   else
   /* Use numerical method otherwise */
-    return PMat_Numeric(l,mod->ns,Pij,qmat_struct);
+    return PMat_Numeric(l,mod->ns,Pij,qmat_struct,tree);
 }
 
 /*********************************************************/
@@ -997,7 +997,7 @@ model *Init_Model(allseq *data, option *input)
 
 /*********************************************************/
 
-int PMat_Numeric(fit_double l, int ns, fit_double **Pij, qmat *qmat_struct)
+int PMat_Numeric(fit_double l, int ns, fit_double **Pij, qmat *qmat_struct, arbre *tree)
 {
   /* Compute change probabilities using eigen vectors and eigen values */
 
@@ -1038,25 +1038,45 @@ int PMat_Numeric(fit_double l, int ns, fit_double **Pij, qmat *qmat_struct)
 	{
 	  Pij[i][j] = .0;
 	  
-	  For(k,n) 
-	    Pij[i][j] += uexpt[i*n+k] * V[k*n+j];
+	  For(k,n)  Pij[i][j] += uexpt[i*n+k] * V[k*n+j];
 	  
-	  if(Pij[i][j] < MDBL_MIN)
-	    {
-	      Pij[i][j] = 1.E-30;
-	    }
+	  /* if(Pij[i][j] < MDBL_MIN) */
+	  /*   { */
+	  /*     Pij[i][j] = 1.E-30; */
+	  /*   } */
 	  if(Pij[i][j] < 0.0)
 	    {
 	      if(Pij[i][j] < 0.0-1.E-5) neg = 1;
-	      Pij[i][j] = 1.E-60;
+	      /* Pij[i][j] = 1.E-60; */
+	      Pij[i][j] = 0.0;
 	    }
 	  sum += Pij[i][j];
 	  
 	}
       if((sum < 1.0-1.E-4) || (sum > 1.0+1.E-4))
 	{
-	  printf("\n= sum = %f\n",sum);
-	  Exit("\n");
+          /* FILE *fp_err; */
+          /* fp_err = fopen("/tmp/fitmodel.err","w"); */
+          /* sum = .0; */
+          
+          /* For(j,n)  */
+          /*   { */
+          /*     sum += Pij[i][j]; */
+          /*     fprintf(fp_err,"[Pij %3d - %3d]  %G %G\n",i,j,Pij[i][j],sum); */
+          /*   } */
+
+          /* For(i,n) For(k,n) fprintf(fp_err,"[UV %3d - %3d]  %f %f %G\n",i,k,U[i*n+k],V[i*n+k],uexpt[i*n+k]); */
+          /* For(i,n) fprintf(fp_err,"[L  %3d]  %G %G %G\n",i,expt[i],R[i],l); */
+          /* fclose(fp_err); */
+
+          printf("\n= WARNING: numerical precision issue encountered when computing Pij matrix.");
+	  printf("\n= Sum of probas = %f\n",sum);
+          Print_Param(stderr,tree);
+	  /* Exit("\n"); */
+
+          sum = 0.0;
+          For(j,n) sum += Pij[i][j];
+          For(j,n) Pij[i][j] /= sum;
 	}
     }
   Free(expt); Free(uexpt);

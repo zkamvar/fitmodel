@@ -980,8 +980,9 @@ void Init_Node_Light(node *n)
 
 void Make_Node_Lk(arbre *tree, node *n)
 {
-    n->seq = (char *)mCalloc(tree->n_pattern*tree->mod->stepsize+1,sizeof(char));
-    return;
+  n->seq = (char *)mCalloc(tree->n_pattern*tree->mod->stepsize+1,sizeof(char));
+  printf("\n. make ->seq for node %d @ %p",n->num,n->seq);
+  return;
 }
 
 /*********************************************************/
@@ -2677,8 +2678,7 @@ allseq *Evolve(arbre *tree)
 
       sum = 0.0;
       For(i,tree->mod->ns) sum += stationnary_p[i];
-      For(i,tree->mod->ns) printf("\n. State freq %3d: %15f",i,stationnary_p[i]);
-
+      /* For(i,tree->mod->ns) printf("\n. State freq %3d: %15f",i,stationnary_p[i]); */
       /* printf("\n. Sum of freq = %f\n",sum); */
     }
   else
@@ -2686,14 +2686,14 @@ allseq *Evolve(arbre *tree)
       sim_seq = Copy_Cseq(tree->data, tree->data->crunch_len, tree->mod->ns);
       For(i,tree->mod->ns) stationnary_p[i] = tree->mod->pi[i];
     }
-    
-    
+        
   tree->curr_site = 0;
     
   DiscreteGamma (tree->mod->r_proba, tree->mod->rr_mixturem, tree->mod->alpha,
 		 tree->mod->alpha,tree->mod->n_catg,0);
   
   Print_Param(tree->input->fp_output_stat,tree);
+  Print_Param(stderr,tree);
 
   For(br,2*tree->n_otu-3) 
     {
@@ -4265,8 +4265,11 @@ void Set_Defaults_Model(model *mod)
   /* Default values of substitution model parameters */
   int i;
 
-  For(i,MMAX(N_MAX_CATQ,N_MAX_OMEGA)) mod->omega_min[i] = 0.0;
-  For(i,MMAX(N_MAX_CATQ,N_MAX_OMEGA)) mod->omega_max[i] = 100.0;
+  For(i,MMAX(N_MAX_CATQ,N_MAX_OMEGA)) mod->omega_min[i] = 0.001;
+  For(i,MMAX(N_MAX_CATQ,N_MAX_OMEGA)) mod->omega_max[i] = 20.;
+
+  
+  
 
   mod->ns                   = 4;
   mod->tpos_ols             = 0;
@@ -4289,7 +4292,7 @@ void Set_Defaults_Model(model *mod)
   mod->invar                = 0;
   mod->stepsize             = 1;
   mod->codon_freq           = 1;
-  mod->omega[0]             = 0.0;
+  mod->omega[0]             = 0.001;
   mod->omega[1]             = 1.0;
   mod->omega[2]             = 4.0;
   mod->omega_proba[0]       = 0.6;
@@ -4602,20 +4605,20 @@ void Print_Param(FILE *fp, arbre *tree)
   if((tree->mod->model_applies_to == CODONS) && (tree->mod->switch_modelname == NO_SWITCH))
       {
         For(i,tree->mod->n_omega)
-          fprintf(fp,"p%d=%3.2f ",i,tree->mod->qmat_struct[0]->qmat_proba[i]);
+          fprintf(fp,"p%d=%3.4f ",i,tree->mod->qmat_struct[0]->qmat_proba[i]);
 
         For(i,tree->mod->n_omega)
-          fprintf(fp,"w%d=%5.2f ",i,tree->mod->qmat_struct[0]->omega[i]);
+          fprintf(fp,"w%d=%5.4f ",i,tree->mod->qmat_struct[0]->omega[i]);
       }
   else if((tree->mod->model_applies_to == CODONS) &&
           ((tree->mod->switch_modelname == SWITCH_S1) ||(tree->mod->switch_modelname == SWITCH_S2)))
       {
 
         For(i,tree->mod->n_omega)
-          fprintf(fp,"p%d=%3.2f ",i,tree->mod->qmat_struct[0]->omega_proba[i]);
+          fprintf(fp,"p%d=%3.4f ",i,tree->mod->qmat_struct[0]->omega_proba[i]);
 
         For(i,tree->mod->n_omega)
-          fprintf(fp,"w%d=%5.2f ",i,tree->mod->qmat_struct[0]->omega[i]);
+          fprintf(fp,"w%d=%5.4f ",i,tree->mod->qmat_struct[0]->omega[i]);
 
         fprintf(fp,"delta=%5.2f ",tree->mod->qmat_struct[0]->theta[0]);
         fprintf(fp,"alpha=%5.2f ",tree->mod->qmat_struct[0]->theta[1]/tree->mod->qmat_struct[0]->theta[0]);
@@ -5768,12 +5771,11 @@ void Untransform_Probs(fit_double *t_probs, /* transformed probabilities */
     For(i,n) sum1 += (fit_double)fabs(t_probs[i]);
 
     For(i,n) 
-        {
-            probs[i] = (fit_double)fabs(t_probs[i])/sum1;
-/*             if(probs[i] < 1.E-4) */
-/* 	      probs[i] = 1.E-4; */
-            sum2 += probs[i];
-        }
+      {
+        probs[i] = (fit_double)fabs(t_probs[i])/sum1;
+        /* if(probs[i] < 1.E-3) probs[i] = 1.E-3; */
+        sum2 += probs[i];
+      }
     For(i,n) 
       {
 	probs[i] /= sum2;
