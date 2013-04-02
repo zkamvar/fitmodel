@@ -72,7 +72,8 @@ option *Get_Input(int argc, char **argv)
   else
     {
 #if defined(EVOLVE)
-      
+      char *n_data_sets;
+
       printf("Enter the tree file name > "); fflush(NULL);
       Getstring_Stdin(input->input_tree_file);
       input->fp_tree = Openfile(input->input_tree_file,0);
@@ -530,6 +531,11 @@ option *Get_Input(int argc, char **argv)
 		  Exit("\n");
 		}
 	      input->mod->omega_min[i] = w;
+              if(input->mod->omega_min[i] < 0.001) 
+                {
+                  printf("\n. WARNING: min value of omega set to 0.001 so as to avoid numerical precision issues");
+                  input->mod->omega_min[i] = 0.001;
+                }
 	    }
 	  
 	  For(i,input->mod->n_omega) 
@@ -543,6 +549,13 @@ option *Get_Input(int argc, char **argv)
 		  Exit("\n");
 		}
 	      input->mod->omega_max[i] = w;
+
+              if(input->mod->omega_max[i] > 20.) 
+                {
+                  printf("\n. WARNING: max value of omega set to 20. so as to avoid numerical precision issues");
+                  input->mod->omega_max[i] = 20.;
+                }
+
 	    }
 	  For(i,input->mod->n_omega) 
 	    {
@@ -2528,10 +2541,12 @@ void Open_Output_Files(option *input,char *seqfile)
   
   char answer, *file_name;
   int n_trial;
-  
+  int pid;
+
   file_name = (char *)mCalloc(T_MAX_FILE,sizeof(char));
 
-  
+  pid = (int)getpid();
+
   strcpy(input->output_stat_file,input->seqfile);
   strcpy(input->output_tree_file,input->seqfile);
   

@@ -1127,8 +1127,8 @@ void Optimiz_All_Free_Param(arbre *tree, int verbose)
                           Optimize_Single_Param_Generic(tree,
                                                         &(tree->mod->qmat_struct[0]->trans_qmat_proba[i]),
                                                         tree->mod->qmat_struct[0]->trans_qmat_proba[i],
-                                                        1.E-4,
-                                                        1.E+4,
+                                                        1.E-2,
+                                                        1.E+2,
                                                         20);
                       }
 
@@ -1141,8 +1141,8 @@ void Optimiz_All_Free_Param(arbre *tree, int verbose)
 		    Optimize_Single_Param_Generic(tree,
 						  &(tree->mod->qmat_struct[0]->trans_qmat_proba[0]),
 						  tree->mod->qmat_struct[0]->trans_qmat_proba[0],
-						  1.E-4,
-						  1.E+4,
+						  1.E-2,
+						  1.E+2,
 						  20);
 		    break;
 		  }
@@ -1164,7 +1164,7 @@ void Optimiz_All_Free_Param(arbre *tree, int verbose)
 			Optimize_Single_Param_Generic(tree,
 						      &(tree->mod->qmat_struct[0]->omega[0]),
 						      tree->mod->qmat_struct[0]->omega[0],
-						      1.E-5,
+						      1.E-3,
 						      20.0,
 						      20);
 			break;
@@ -1175,7 +1175,7 @@ void Optimiz_All_Free_Param(arbre *tree, int verbose)
 			Optimize_Single_Param_Generic(tree,
 						      &(tree->mod->qmat_struct[0]->omega[0]),
 						      tree->mod->qmat_struct[0]->omega[0],
-						      1.E-5,
+						      1.E-3,
 						      1.00,
 						      20);
 			break;
@@ -1187,7 +1187,7 @@ void Optimiz_All_Free_Param(arbre *tree, int verbose)
 			Optimize_Single_Param_Generic(tree,
 						      &(tree->mod->qmat_struct[0]->omega[2]),
 						      tree->mod->qmat_struct[0]->omega[2],
-						      1.E-5,
+						      1.E-3,
 						      20.0,
 						      20);
 /* 			Sort_Categories(tree); */
@@ -1205,7 +1205,7 @@ void Optimiz_All_Free_Param(arbre *tree, int verbose)
 			    Optimize_Single_Param_Generic(tree,
 							  &(tree->mod->qmat_struct[0]->omega[i]),
 							  tree->mod->qmat_struct[0]->omega[i],
-							  1.E-5,
+							  1.E-3,
 							  20.0,
 							  20);
 			Sort_Categories(tree);
@@ -1241,8 +1241,10 @@ void Optimiz_All_Free_Param(arbre *tree, int verbose)
                                 Optimize_Single_Param_Generic(tree,
                                                               &(tree->mod->qmat_struct[0]->omega[i]),
                                                               tree->mod->qmat_struct[0]->omega[i],
-                                                              tree->mod->qmat_struct[0]->omega_min[i],
-                                                              tree->mod->qmat_struct[0]->omega_max[i],
+                                                              /* tree->mod->qmat_struct[0]->omega_min[i], */
+                                                              /* tree->mod->qmat_struct[0]->omega_max[i], */
+                                                              0.001,
+                                                              20.,
                                                               20);
                               }
                           }
@@ -1305,8 +1307,8 @@ void Optimiz_All_Free_Param(arbre *tree, int verbose)
                         Optimize_Single_Param_Generic(tree,
                                                       &(tree->mod->qmat_struct[0]->trans_omega_proba[i]),
                                                       tree->mod->qmat_struct[0]->trans_omega_proba[i],
-                                                      1.E-4,
-                                                      1.E+4,
+                                                      1.E-1,
+                                                      1.E+1,
                                                       20);                                            		    
                     }
                 }
@@ -1322,7 +1324,7 @@ void Optimiz_All_Free_Param(arbre *tree, int verbose)
 			Optimize_Single_Param_Generic(tree,
 						      &(tree->mod->qmat_struct[0]->omega[2]),
 						      tree->mod->qmat_struct[0]->omega[2],
-						      1.E-5,
+						      1.E-3,
 						      20.,
 						      20);
 /* 			Sort_Categories(tree); */
@@ -1338,7 +1340,7 @@ void Optimiz_All_Free_Param(arbre *tree, int verbose)
 			    Optimize_Single_Param_Generic(tree,
 							  &(tree->mod->qmat_struct[0]->omega[i]),
 							  tree->mod->qmat_struct[0]->omega[i],
-							  1.E-5,
+							  1.E-3,
 							  20.,
 							  20);
 			Sort_Categories(tree);
@@ -1372,8 +1374,10 @@ void Optimiz_All_Free_Param(arbre *tree, int verbose)
                                 Optimize_Single_Param_Generic(tree,
                                                               &(tree->mod->qmat_struct[0]->omega[i]),
                                                               tree->mod->qmat_struct[0]->omega[i],
-                                                              tree->mod->qmat_struct[0]->omega_min[i],
-                                                              tree->mod->qmat_struct[0]->omega_max[i],
+                                                              /* tree->mod->qmat_struct[0]->omega_min[i], */
+                                                              /* tree->mod->qmat_struct[0]->omega_max[i], */
+                                                              0.001,
+                                                              20.,
                                                               20);
                               }
                           }
@@ -1400,7 +1404,7 @@ void Optimiz_All_Free_Param(arbre *tree, int verbose)
 			Optimize_Single_Param_Generic(tree,
 						      &(tree->mod->qmat_struct[0]->omega[0]),
 						      tree->mod->qmat_struct[0]->omega[0],
-						      1.E-5,
+						      1.E-3,
 						      20.,
 						      20);
 			break;

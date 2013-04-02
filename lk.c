@@ -775,7 +775,7 @@ fit_double Lk_At_Given_Edge_Codon(arbre *tree, edge *b_fcus)
 	      PMat(len,
 		   tree->mod,
 		   b_fcus->Pij_rr[catq][catg],
-		   NULL);
+		   NULL,tree);
 	    }
 	  else
 	    {
@@ -783,7 +783,7 @@ fit_double Lk_At_Given_Edge_Codon(arbre *tree, edge *b_fcus)
 	      PMat(len,
 		   tree->mod,
 		   b_fcus->Pij_rr[catq][catg],
-		   b_fcus->qmat_struct);
+		   b_fcus->qmat_struct,tree);
 	    }
 	}
     }
@@ -1073,7 +1073,7 @@ fit_double Lk_At_Given_Edge_Nt_AA(arbre *tree, edge *b_fcus)
 	      PMat(len,
 		   tree->mod,
 		   b_fcus->Pij_rr[catq][catg],
-		   NULL);
+		   NULL,tree);
 	    }
 	  else
 	    {
@@ -1081,7 +1081,7 @@ fit_double Lk_At_Given_Edge_Nt_AA(arbre *tree, edge *b_fcus)
 	      PMat(len,
 		   tree->mod,
 		   b_fcus->Pij_rr[catq][catg],
-		   b_fcus->qmat_struct);
+		   b_fcus->qmat_struct,tree);
 	    }
 	}
     }
@@ -1207,7 +1207,7 @@ void Update_P(arbre *tree, int t_edge_num)
 	      PMat(len,
 		   tree->mod,
 		   tree->t_edges[t_edge_num]->Pij_rr[catq][catg],
-		   NULL);
+		   NULL,tree);
 	    }
 	}
       else
@@ -1218,7 +1218,7 @@ void Update_P(arbre *tree, int t_edge_num)
 	      PMat(len,
 		   tree->mod,
 		   tree->t_edges[t_edge_num]->Pij_rr[catq][catg],
-		   tree->t_edges[t_edge_num]->qmat_struct);
+		   tree->t_edges[t_edge_num]->qmat_struct,tree);
 	    }
 	}
     }
@@ -1810,7 +1810,7 @@ void Get_PMat(arbre *tree, fit_double len, fit_double ****Pij, qmat *qmat_struct
 	      PMat(len,
 		   tree->mod,
 		   Pij[catq][catg],
-		   NULL);
+		   NULL,tree);
 	    }
 	  else
 	    {
@@ -1818,7 +1818,7 @@ void Get_PMat(arbre *tree, fit_double len, fit_double ****Pij, qmat *qmat_struct
 	      PMat(len,
 		   tree->mod,
 		   Pij[catq][catg],
-		   qmat_struct);
+		   qmat_struct,tree);
 	    }
 	}
     }
@@ -2482,12 +2482,12 @@ void Integral_Term_On_One_Edge(edge *b, arbre *tree)
       PMat(((fit_double)(i+0.5)/step)*b->l,
 	   tree->mod,
 	   P1,
-	   b->qmat_struct);
+	   b->qmat_struct,tree);
       
       PMat(((fit_double)(step-i-0.5)/step)*b->l,
 	   tree->mod,
 	   P2,
-	   b->qmat_struct);
+	   b->qmat_struct,tree);
       
 
       For(j,ns)
@@ -2599,8 +2599,8 @@ fit_double Compute_Proba_Omega_At_One_Spot_At_One_Site(edge *b, fit_double pos, 
   P2 = (fit_double **)mCalloc(tree->mod->ns,sizeof(fit_double *));
   For(i,tree->mod->ns) P2[i] = (fit_double *)mCalloc(tree->mod->ns,sizeof(fit_double));
 
-  PMat(pos*b->l,     tree->mod,P1,b->qmat_struct);
-  PMat((1.-pos)*b->l,tree->mod,P2,b->qmat_struct);
+  PMat(pos*b->l,     tree->mod,P1,b->qmat_struct,tree);
+  PMat((1.-pos)*b->l,tree->mod,P2,b->qmat_struct,tree);
 
   p = 0.0;
   For(i,tree->mod->ns)
