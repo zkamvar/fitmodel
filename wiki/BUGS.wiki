@@ -1,4 +1,4 @@
- * _10 May 2013._ Another bug prevented the optimisation of model parameters. It is now fixed in version 20130510.
+ * _11 May 2013._ Another bug prevented the optimisation of model parameters. It is now fixed in version 20130511.
 
  * _09 May 2013._ A bug prevented the optimisation of model parameters. It is now fixed in version 20130509.
 
