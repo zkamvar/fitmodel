@@ -1,3 +1,5 @@
+ * _10 May 2013._ Another bug prevented the optimisation of model parameters. It is now fixed in version 20130510.
+
  * _09 May 2013._ A bug prevented the optimisation of model parameters. It is now fixed in version 20130509.
 
   * _08 May 2013._ A bug prevented the writing of the tree output files properly. It is now fixed in release 20130508.
