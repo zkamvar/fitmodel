@@ -53,10 +53,10 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = x86_64-unknown-linux-gnu
 host_triplet = x86_64-unknown-linux-gnu
-bin_PROGRAMS =  \
-	fitmodel$(EXEEXT)
-#bin_PROGRAMS = evolve$(EXEEXT)
-#bin_PROGRAMS = treeview$(EXEEXT)
+#bin_PROGRAMS =  \
+#	fitmodel$(EXEEXT)
+##bin_PROGRAMS = evolve$(EXEEXT)
+bin_PROGRAMS = treeview$(EXEEXT)
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
@@ -87,23 +87,7 @@ evolve_DEPENDENCIES =
 am__fitmodel_SOURCES_DIST = main.c utilities.c utilities.h optimiz.c \
 	optimiz.h lk.c lk.h models.c models.h free.c free.h options.c \
 	options.h eigen.c eigen.h eigenmb.c eigenmb.h draw.c draw.h
-am_fitmodel_OBJECTS =  \
-	main.$(OBJEXT) \
-	utilities.$(OBJEXT) \
-	optimiz.$(OBJEXT) \
-	lk.$(OBJEXT) \
-	models.$(OBJEXT) \
-	free.$(OBJEXT) \
-	options.$(OBJEXT) \
-	eigen.$(OBJEXT) \
-	eigenmb.$(OBJEXT) \
-	draw.$(OBJEXT)
-fitmodel_OBJECTS = $(am_fitmodel_OBJECTS)
-fitmodel_DEPENDENCIES =
-am__treeview_SOURCES_DIST = main.c utilities.c utilities.h optimiz.c \
-	optimiz.h lk.c lk.h models.c models.h free.c free.h options.c \
-	options.h eigen.c eigen.h eigenmb.c eigenmb.h draw.c draw.h
-#am_treeview_OBJECTS =  \
+#am_fitmodel_OBJECTS =  \
 #	main.$(OBJEXT) \
 #	utilities.$(OBJEXT) \
 #	optimiz.$(OBJEXT) \
@@ -114,6 +98,22 @@ am__treeview_SOURCES_DIST = main.c utilities.c utilities.h optimiz.c \
 #	eigen.$(OBJEXT) \
 #	eigenmb.$(OBJEXT) \
 #	draw.$(OBJEXT)
+fitmodel_OBJECTS = $(am_fitmodel_OBJECTS)
+fitmodel_DEPENDENCIES =
+am__treeview_SOURCES_DIST = main.c utilities.c utilities.h optimiz.c \
+	optimiz.h lk.c lk.h models.c models.h free.c free.h options.c \
+	options.h eigen.c eigen.h eigenmb.c eigenmb.h draw.c draw.h
+am_treeview_OBJECTS =  \
+	main.$(OBJEXT) \
+	utilities.$(OBJEXT) \
+	optimiz.$(OBJEXT) \
+	lk.$(OBJEXT) \
+	models.$(OBJEXT) \
+	free.$(OBJEXT) \
+	options.$(OBJEXT) \
+	eigen.$(OBJEXT) \
+	eigenmb.$(OBJEXT) \
+	draw.$(OBJEXT)
 treeview_OBJECTS = $(am_treeview_OBJECTS)
 treeview_DEPENDENCIES =
 DEFAULT_INCLUDES = -I.
@@ -197,15 +197,15 @@ OBJEXT = o
 PACKAGE = fitmodel
 PACKAGE_BUGREPORT = s.guindon@auckland.ac.nz
 PACKAGE_NAME = Fitmodel
-PACKAGE_STRING = Fitmodel 20130115
+PACKAGE_STRING = Fitmodel 20130516
 PACKAGE_TARNAME = fitmodel
 PACKAGE_URL = 
-PACKAGE_VERSION = 20130115
+PACKAGE_VERSION = 20130516
 PATH_SEPARATOR = :
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
-VERSION = 20130115
+VERSION = 20130516
 abs_builddir = /home/guindon/cvshome/fitmodel
 abs_srcdir = /home/guindon/cvshome/fitmodel
 abs_top_builddir = /home/guindon/cvshome/fitmodel
@@ -256,9 +256,9 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-PROG = FITMODEL
-#PROG = EVOLVE
-#PROG = TREEVIEW
+#PROG = FITMODEL
+##PROG = EVOLVE
+PROG = TREEVIEW
 #evolve_SOURCES = main.c \
 #utilities.c  utilities.h\
 #optimiz.c  optimiz.h\
@@ -271,19 +271,7 @@ PROG = FITMODEL
 #draw.c  draw.h
 
 #evolve_LDADD = -lm 
-#treeview_SOURCES = main.c \
-#utilities.c  utilities.h\
-#optimiz.c  optimiz.h\
-#lk.c  lk.h\
-#models.c  models.h\
-#free.c  free.h\
-#options.c  options.h\
-#eigen.c  eigen.h\
-#eigenmb.c  eigenmb.h\
-#draw.c  draw.h
-
-#treeview_LDADD = -lm 
-fitmodel_SOURCES = main.c \
+treeview_SOURCES = main.c \
 utilities.c  utilities.h\
 optimiz.c  optimiz.h\
 lk.c  lk.h\
@@ -294,7 +282,19 @@ eigen.c  eigen.h\
 eigenmb.c  eigenmb.h\
 draw.c  draw.h
 
-fitmodel_LDADD = -lm 
+treeview_LDADD = -lm 
+#fitmodel_SOURCES = main.c \
+#utilities.c  utilities.h\
+#optimiz.c  optimiz.h\
+#lk.c  lk.h\
+#models.c  models.h\
+#free.c  free.h\
+#options.c  options.h\
+#eigen.c  eigen.h\
+#eigenmb.c  eigenmb.h\
+#draw.c  draw.h
+
+#fitmodel_LDADD = -lm 
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 

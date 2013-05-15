@@ -12,14 +12,15 @@ they accommodate site-specific switches between selection  regimes without a pri
 positions in the tree where changes of selection regimes occurred.
 
 The program  will ask for  two input files:  a tree file  and a sequence  file.  The tree  should be
-unrooted and in NEWICK format.  The sequences  should be in PHYLIP interleaved or sequential format.
-If you are planning  to use codon-based models, the sequence length should be  a multiple of 3.  The
-program provides four types  of codon models: M1, M2, M2a, and M3  (see PAML manual).  Moreover, M2,
-M2a  and M3  can  be  combined with  'switching'  models (option  'M').   Two  switching models  are
-implemented: S1  and S2.  S1  constraints the rates  of changes between  dN/dS values to  be uniform
-(e.g., the rates of changes between negative and positive selection is constrained to be the same as
-the rate of change  between neutrality and positive selection) while S2  allows for differents rates
-of change between the different classes of dN/dS values.
+unrooted  and in  NEWICK format.   fitmodel will  crash  if you  feed him  with a  rooted tree.  The
+sequences  should be  in  PHYLIP interleaved  or  sequential format.   If you  are  planning to  use
+codon-based models, the sequence length should be a  multiple of 3.  The program provides four types
+of codon models:  M1, M2, M2a, and M3 (see  PAML manual).  Moreover, M2, M2a and  M3 can be combined
+with  'switching' models  (option  'M').  Two  switching  models  are implemented:  S1  and S2.   S1
+constraints the  rates of changes  between dN/dS values  to be uniform  (e.g., the rates  of changes
+between negative and positive selection is constrained to  be the same as the rate of change between
+neutrality  and positive  selection) while  S2 allows  for differents  rates of  change between  the
+different classes of dN/dS values.
 
 If  you are  using  a 'switching'  model,  'fitmodel' will  output file  with  the follwoing  names:
 your_sequence_file_trees_w1,     your_sequence_file_trees_w2,     your_sequence_file_trees_w3    and
