@@ -384,7 +384,11 @@ arbre *Read_Tree(char *s_tree)
       tree->n_root->anc = NULL;
     }
 
-  For(i,2*tree->n_otu-3) tree->t_edges[i]->prob_sel_regime = tree->t_edges[i]->l_prime;
+  For(i,2*tree->n_otu-3) 
+    {
+      tree->t_edges[i]->prob_sel_regime = tree->t_edges[i]->l_prime;
+    }
+
 
   For(i,NODE_DEG_MAX) Free(subs[i]);
   Free(subs);
@@ -794,6 +798,7 @@ edge *Make_Edge_Light(node *a, node *d, int num)
 
       b->l                    = a->l[b->l_r];
       b->prob_sel_regime      = a->l_prime[b->l_r];
+
       if(a->tax) {b->l        = a->l[b->r_l]; b->prob_sel_regime = a->l_prime[b->r_l];}
       if(b->l < BL_MIN)  b->l = BL_MIN;
       else if(b->l > BL_MAX) b->l = BL_MAX;
@@ -981,7 +986,6 @@ void Init_Node_Light(node *n)
 void Make_Node_Lk(arbre *tree, node *n)
 {
   n->seq = (char *)mCalloc(tree->n_pattern*tree->mod->stepsize+1,sizeof(char));
-  printf("\n. make ->seq for node %d @ %p",n->num,n->seq);
   return;
 }
 
@@ -2420,6 +2424,11 @@ void Alloc_All_P_Lk(arbre *tree)
       tree->t_edges[i]->p_lk_rght = 
       (fit_double ****)mCalloc(tree->n_pattern,sizeof(fit_double ***));
       
+      /* printf("\n. MAKE %p %p", */
+      /*        tree->t_edges[i], */
+      /*        tree->t_edges[i]->p_lk_rght); */
+      /* fflush(NULL); */
+
       For(j,tree->n_pattern)
 	{
 	  tree->t_edges[i]->p_lk_left[j] = 
@@ -7234,7 +7243,7 @@ void Read_Branch_Length(char *s_d, char *s_a, arbre *tree)
       tree->has_branch_lengths = 1;
     }
   
-  sprintf(sub_tp+strlen(sub_tp),"%.3f",b->l);
+  sprintf(sub_tp+strlen(sub_tp),"%f",b->l); // Use %f and not %.xf otherwise strstr(s_a,sub_tp) will always return null
   strcat(sub_tp,"::");
   p = strstr(s_a,sub_tp);
   if(p) 

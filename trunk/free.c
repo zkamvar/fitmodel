@@ -430,10 +430,10 @@ void Free_Qmat(qmat *this1, model *mod)
   Free(this1->expD_mr_vct);
   Free(this1->qmat);
   Free(this1->qmat_proba);
-  Free(this1->trans_qmat_proba);
+  if(mod->switch_modelname != NO_SWITCH) Free(this1->trans_qmat_proba);
   Free(this1->omega);
   Free(this1->omega_proba);
-  Free(this1->trans_omega_proba);
+  if(mod->switch_modelname == NO_SWITCH) Free(this1->trans_omega_proba);
   Free(this1->theta);
   Free(this1->t_omega);
   Free(this1->t_omega_proba);

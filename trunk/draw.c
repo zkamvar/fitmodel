@@ -30,7 +30,10 @@ void Draw_Tree(edge *b_root, tdraw *w, arbre *tree)
 
 void Print_Postscript_Header(int n_pages, FILE *fp)
 {
+  int y;
+
   fprintf(fp,"%%!PS-Adobe-3.0\n");
+  fprintf(fp,"%%%%BoundingBox: 40 40 560 820\n");
   fprintf(fp,"%%%%DocumentFonts: Times-Roman Times-Roman\n");
   fprintf(fp,"%%%%Creator: Stephane Guindon\n");
   fprintf(fp,"%%%%Title: tree\n");
@@ -43,23 +46,148 @@ void Print_Postscript_Header(int n_pages, FILE *fp)
   fprintf(fp,"/lt {lineto} bind def\n");
   fprintf(fp,"/mt {moveto} bind def\n");
   fprintf(fp,"/sc {setrgbcolor} bind def\n");
-
-  fprintf(fp,"/clipbox\n");
-  fprintf(fp,"{\n");
-  fprintf(fp,"newpath\n");
-  fprintf(fp,"40 40 moveto\n");
-  fprintf(fp,"560 40 lineto\n");
-  fprintf(fp,"560 810 lineto\n");
-  fprintf(fp,"40 810 lineto\n");
-  fprintf(fp,"40 40 lineto\n");
-  fprintf(fp,"closepath\n");
-  fprintf(fp,"clip\n");
-  fprintf(fp,"} bind def\n");
+  fprintf(fp,"/ct {curveto} bind def\n");
+  fprintf(fp,"/np {newpath} bind def\n");
+  fprintf(fp,"/cp {closepath} bind def\n");
+  fprintf(fp,"/gs {gsave} bind def\n");
+  fprintf(fp,"/gr {grestore} bind def\n");
   
   fprintf(fp,"/Times-Roman findfont\n");
   fprintf(fp,"12 scalefont\n");
   fprintf(fp,"setfont\n");
 
+  fprintf(fp,"/clipbox\n");
+  fprintf(fp,"{\n");
+  fprintf(fp,"newpath\n");
+  fprintf(fp,"40 40 mt\n");
+  fprintf(fp,"560 40 lt\n");
+  fprintf(fp,"560 820 lt\n");
+  fprintf(fp,"40 820 lt\n");
+  fprintf(fp,"40 40 lt\n");
+  fprintf(fp,"closepath\n");
+  fprintf(fp,"clip\n");
+  fprintf(fp,"} bind def\n");
+
+
+
+  fprintf(fp,"%%%%Page: %d %d\n",1,1); 
+  /* fprintf(fp,"clipbox\n"); */
+  /* fprintf(fp,"stroke\n"); */
+  fprintf(fp,"50 50 translate\n");
+  fprintf(fp,"newpath\n");
+  fprintf(fp,"stroke\n");
+
+
+  fprintf(fp,"130 650 mt\n");
+  fprintf(fp,"(- Coloring scheme for selection class probabilities -) show\n");
+
+  y = 600;
+  fprintf(fp,"130 %d mt\n",y+3);
+  fprintf(fp,".0 1. 1. sc\n");
+  fprintf(fp,"%d %d lt\n",150,y+3);
+  fprintf(fp,"160 %d mt\n",y);
+  fprintf(fp,"(p < %5.3f) show\n",1./13.);
+  fprintf(fp,"stroke\n");
+
+  y = 580;
+  fprintf(fp,"130 %d mt\n",y+3);
+  fprintf(fp,".0 1. .8 sc\n");
+  fprintf(fp,"%d %d lt\n",150,y+3);
+  fprintf(fp,"160 %d mt\n",y);
+  fprintf(fp,"(%5.3f < p < %5.3f) show\n",1./13.,2./13.);
+  fprintf(fp,"stroke\n");
+
+  y = 560;
+  fprintf(fp,"130 %d mt\n",y+3);
+  fprintf(fp,".0 1. .5 sc\n");
+  fprintf(fp,"%d %d lt\n",150,y+3);
+  fprintf(fp,"160 %d mt\n",y);
+  fprintf(fp,"(%5.3f < p < %5.3f) show\n",2./13.,3./13.);
+  fprintf(fp,"stroke\n");
+
+  y = 540;
+  fprintf(fp,"130 %d mt\n",y+3);
+  fprintf(fp,".0 1. .3 sc\n");
+  fprintf(fp,"%d %d lt\n",150,y+3);
+  fprintf(fp,"160 %d mt\n",y);
+  fprintf(fp,"(%5.3f < p < %5.3f) show\n",3./13.,4./13.);
+  fprintf(fp,"stroke\n");
+
+  y = 520;
+  fprintf(fp,"130 %d mt\n",y+3);
+  fprintf(fp,".0 1. .0 sc\n");
+  fprintf(fp,"%d %d lt\n",150,y+3);
+  fprintf(fp,"160 %d mt\n",y);
+  fprintf(fp,"(%5.3f < p < %5.3f) show\n",4./13.,5./13.);
+  fprintf(fp,"stroke\n");
+
+  y = 500;
+  fprintf(fp,"130 %d mt\n",y+3);
+  fprintf(fp,".25 1. .0 sc\n");
+  fprintf(fp,"%d %d lt\n",150,y+3);
+  fprintf(fp,"160 %d mt\n",y);
+  fprintf(fp,"(%5.3f < p < %5.3f) show\n",5./13.,6./13.);
+  fprintf(fp,"stroke\n");
+
+  y = 480;
+  fprintf(fp,"130 %d mt\n",y+3);
+  fprintf(fp,".5 1. .0 sc\n");
+  fprintf(fp,"%d %d lt\n",150,y+3);
+  fprintf(fp,"160 %d mt\n",y);
+  fprintf(fp,"(%5.3f < p < %5.3f) show\n",6./13.,7./13.);
+  fprintf(fp,"stroke\n");
+
+  y = 460;
+  fprintf(fp,"130 %d mt\n",y+3);
+  fprintf(fp,".75 1. .0 sc\n");
+  fprintf(fp,"%d %d lt\n",150,y+3);
+  fprintf(fp,"160 %d mt\n",y);
+  fprintf(fp,"(%5.3f < p < %5.3f) show\n",7./13.,8./13.);
+  fprintf(fp,"stroke\n");
+
+  y = 440;
+  fprintf(fp,"130 %d mt\n",y+3);
+  fprintf(fp,"1. 1. .0 sc\n");
+  fprintf(fp,"%d %d lt\n",150,y+3);
+  fprintf(fp,"160 %d mt\n",y);
+  fprintf(fp,"(%5.3f < p < %5.3f) show\n",8./13.,9./13.);
+  fprintf(fp,"stroke\n");
+
+  y = 420;
+  fprintf(fp,"130 %d mt\n",y+3);
+  fprintf(fp,"1. .75 .0 sc\n");
+  fprintf(fp,"%d %d lt\n",150,y+3);
+  fprintf(fp,"160 %d mt\n",y);
+  fprintf(fp,"(%5.3f < p < %5.3f) show\n",9./13.,10./13.);
+  fprintf(fp,"stroke\n");
+
+  y = 400;
+  fprintf(fp,"130 %d mt\n",y+3);
+  fprintf(fp,"1. .5 .0 sc\n");
+  fprintf(fp,"%d %d lt\n",150,y+3);
+  fprintf(fp,"160 %d mt\n",y);
+  fprintf(fp,"(%5.3f < p < %5.3f) show\n",10./13.,11./13.);
+  fprintf(fp,"stroke\n");
+
+  y = 380;
+  fprintf(fp,"130 %d mt\n",y+3);
+  fprintf(fp,"1. .25 .0 sc\n");
+  fprintf(fp,"%d %d lt\n",150,y+3);
+  fprintf(fp,"160 %d mt\n",y);
+  fprintf(fp,"(%5.3f < p < %5.3f) show\n",11./13.,12./13.);
+  fprintf(fp,"stroke\n");
+
+  y = 360;
+  fprintf(fp,"130 %d mt\n",y+3);
+  fprintf(fp,"1. .0 .0 sc\n");
+  fprintf(fp,"%d %d lt\n",150,y+3);
+  fprintf(fp,"160 %d mt\n",y);
+  fprintf(fp,"(%5.3f < p < %5.3f) show\n",12./13.,13./13.);
+
+
+  fprintf(fp,"closepath\n");
+  fprintf(fp,"stroke\n");
+  fprintf(fp,"showpage\n");
 
 }
 
@@ -76,68 +204,82 @@ void Print_Postscript_EOF(FILE *fp)
 void Print_Tree_Postscript(edge *b_root, FILE *fp, int tree_num, tdraw *w, arbre *tree)
 {
   int i;
-  
+  double max,min,step;
 
-  fprintf(fp,"%%%%Page: %d %d\n",tree_num+1,tree_num+1); 
-  fprintf(fp,"clipbox\n");
-  fprintf(fp,"stroke\n");
+  min = 0.0;
+  max = 1.0;
+
+  step = (max-min)/13.;
+  
+  fprintf(fp,"%%%%Page: %d %d\n",tree_num+2,tree_num+2); 
+  /* fprintf(fp,"clipbox\n"); */
+  /* fprintf(fp,"stroke\n"); */
   fprintf(fp,"50 50 translate\n");
   fprintf(fp,"newpath\n");
 
-  printf("\n. Reading branch %d, has probability %f attached to it.",b_root->num,b_root->prob_sel_regime);
+  fprintf(fp,"50 750 mt\n");
+  fprintf(fp,"(- site %d -) show\n",tree_num+1);
 
-  if(b_root->prob_sel_regime <= 0.1)
-    fprintf(fp,".0 .0 1. sc\n");
-  else if(b_root->prob_sel_regime > 0.1 && b_root->prob_sel_regime <= 0.2)
-    fprintf(fp,".0 .5 1. sc\n");
-  else if(b_root->prob_sel_regime > 0.2 && b_root->prob_sel_regime <= 0.3)
+  if(b_root->prob_sel_regime <= min+1.*step)
     fprintf(fp,".0 1. 1. sc\n");
-  else if(b_root->prob_sel_regime > 0.3 && b_root->prob_sel_regime <= 0.4)
+  else if(b_root->prob_sel_regime > min+1.*step && b_root->prob_sel_regime <= min+2.*step)
+    fprintf(fp,".0 1. .8 sc\n");
+  else if(b_root->prob_sel_regime > min+2.*step && b_root->prob_sel_regime <= min+3.*step)
     fprintf(fp,".0 1. .5 sc\n");
-  else if(b_root->prob_sel_regime > 0.4 && b_root->prob_sel_regime <= 0.5)
+  else if(b_root->prob_sel_regime > min+3.*step && b_root->prob_sel_regime <= min+4.*step)
+    fprintf(fp,".0 1. .3 sc\n");
+  else if(b_root->prob_sel_regime > min+4.*step && b_root->prob_sel_regime <= min+5.*step)
     fprintf(fp,".0 1. .0 sc\n");
-  else if(b_root->prob_sel_regime > 0.5 && b_root->prob_sel_regime <= 0.6)
-    fprintf(fp,".5 1. .0 sc\n");
-  else if(b_root->prob_sel_regime > 0.6 && b_root->prob_sel_regime <= 0.7)
-    fprintf(fp,"1. 1. 0. sc\n");
-  else if(b_root->prob_sel_regime > 0.7 && b_root->prob_sel_regime <= 0.8)
-    fprintf(fp,"1. .5 0. sc\n");
-  else if(b_root->prob_sel_regime > 0.8 && b_root->prob_sel_regime <= 0.9)
-    fprintf(fp,"1. 0. 0. sc\n");
-  else if(b_root->prob_sel_regime > 0.9)
-    fprintf(fp,"1. .0 .0 sc\n");
-
-
+  else if(b_root->prob_sel_regime > min+5.*step && b_root->prob_sel_regime <= min+6.*step)
+    fprintf(fp,".25 1. 0. sc\n");
+  else if(b_root->prob_sel_regime > min+6.*step && b_root->prob_sel_regime <= min+7.*step)
+    fprintf(fp,".5 1. 0. sc\n");
+  else if(b_root->prob_sel_regime > min+7.*step && b_root->prob_sel_regime <= min+8.*step)
+    fprintf(fp,".75 1. .0 sc\n");
+  else if(b_root->prob_sel_regime > min+8.*step && b_root->prob_sel_regime <= min+9.*step)
+    fprintf(fp,"1. 1. .0 sc\n");
+  else if(b_root->prob_sel_regime > min+9.*step && b_root->prob_sel_regime <= min+10.*step)
+    fprintf(fp,"1. .75 .0 sc\n");
+  else if(b_root->prob_sel_regime > min+10.*step && b_root->prob_sel_regime <= min+11.*step)
+    fprintf(fp,"1. .5 .0 sc\n");
+  else if(b_root->prob_sel_regime > min+11.*step && b_root->prob_sel_regime <= min+12.*step)
+    fprintf(fp,"1. .25 .0 sc\n");
+  else if(b_root->prob_sel_regime > min+12.*step && b_root->prob_sel_regime <= min+13.*step)
+    fprintf(fp,"1. .0 0. sc\n");
+  
+  
   fprintf(fp,"%d %d mt\n",w->xcoord[b_root->left->num],w->ycoord[b_root->left->num]);
   fprintf(fp,"%d %d lt\n",0,w->ycoord[b_root->left->num]);
   fprintf(fp,"%d %d lt\n",0,w->ycoord[b_root->rght->num]);
   fprintf(fp,"%d %d lt\n",w->xcoord[b_root->rght->num],w->ycoord[b_root->rght->num]);
   fprintf(fp,"stroke\n");
 
-  fprintf(fp,"%d %d mt\n",w->xcoord[b_root->left->num],w->ycoord[b_root->left->num]);
   if(b_root->left->tax) 
     {
+      fprintf(fp,"%d %d mt\n",w->xcoord[b_root->left->num],w->ycoord[b_root->left->num]);
       fprintf(fp,"(%s) show\n",b_root->left->name);
     }
-  else
+  
+  if(b_root->rght->tax)
+    {
+      fprintf(fp,"%d %d mt\n",w->xcoord[b_root->rght->num],w->ycoord[b_root->rght->num]);
+      fprintf(fp,"(%s) show\n",b_root->rght->name);
+    }
+  
+  if(!b_root->left->tax)
     {
       For(i,3)
 	if((b_root->left->v[i]) && (b_root->left->v[i] != b_root->rght))
 	  Print_Tree_Postscript_Pre(b_root->left,b_root->left->v[i],fp,w,tree);
     }
 
-  fprintf(fp,"%d %d mt\n",w->xcoord[b_root->rght->num],w->ycoord[b_root->rght->num]);
-
-  if(b_root->rght->tax) 
-    {
-      fprintf(fp,"(%s) show\n",b_root->rght->name);
-    }
-  else
+  if(!b_root->rght->tax)
     {
       For(i,3)
 	if((b_root->rght->v[i]) && (b_root->rght->v[i] != b_root->left))
 	  Print_Tree_Postscript_Pre(b_root->rght,b_root->rght->v[i],fp,w,tree);
     }
+
 
   fprintf(fp,"closepath\n");
   fprintf(fp,"stroke\n");
@@ -153,7 +295,7 @@ void Print_Tree_Postscript_Pre(node *a, node *d, FILE *fp, tdraw *w, arbre *tree
   double step;
 
   min = 0.0;
-  max = 4.;
+  max = 1.0;
 
   step = (max-min)/13.;
 
@@ -161,9 +303,7 @@ void Print_Tree_Postscript_Pre(node *a, node *d, FILE *fp, tdraw *w, arbre *tree
   
   For(i,3)
     if(a->v[i] == d)
-      {
-	printf("\n. Reading branch %d, has probability %f attached to it.",a->b[i]->num,a->b[i]->prob_sel_regime);
-       
+      {       
 	 if(a->b[i]->prob_sel_regime <= min+1.*step)
 	  fprintf(fp,".0 1. 1. sc\n");
 	else if(a->b[i]->prob_sel_regime > min+1.*step && a->b[i]->prob_sel_regime <= min+2.*step)
@@ -343,7 +483,7 @@ tdraw *Make_Tdraw_Struct(arbre *tree)
 void Init_Tdraw_Struct(tdraw *w)
 {
   w->page_width  = 510;
-  w->page_height = 770;
+  w->page_height = 750;
 }
 
 /*********************************************************/

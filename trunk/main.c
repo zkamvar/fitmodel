@@ -136,10 +136,12 @@ int main(int argc, char **argv)
                 Init_Num_Parameters(tree);
 				
 		Print_Model_Param(tree);
+                
 
                 if(tree->mod->s_opt->opt_param) Round_Optimize(tree,tree->data); /* Optimise parameters */
                 else                            Return_Lk(tree); /* Just compute the likelihood */
-                
+
+
                 fflush(NULL);
                 
                 Update_BrLen_Invar(tree); /* Update branch lengths by taking into 
@@ -161,7 +163,7 @@ int main(int argc, char **argv)
 				tree->n_otu,
 				tree->n_pattern);
 
-                        /* Compute_Proba_Omega_On_Edges(tree); */
+                        Compute_Proba_Omega_On_Edges(tree);
 
                         fprintf(tree->input->fp_output_tree,"end;\n");
                     }
@@ -1922,6 +1924,7 @@ int main(int argc, char **argv)
 	  Print_Tree_Postscript(b_root,fp_tree_ps,tree_num,w,tree);
 	  tree_num++;
 	}
+      
     }while(1);
 
   Print_Postscript_EOF(fp_tree_ps);

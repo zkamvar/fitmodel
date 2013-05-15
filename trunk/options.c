@@ -1606,6 +1606,10 @@ char Print_Menu_Codon(option *input, char *s)
 		input->mod->s_opt->opt_p_omega = 1;
 		input->mod->omega[0]           = 0.0;
 		input->mod->omega[1]           = 1.0;
+                input->mod->omega_min[0]       = 0.0;
+                input->mod->omega_max[0]       = 20.0;
+                input->mod->omega_min[1]       = 0.0;
+                input->mod->omega_max[1]       = 20.0;
 		input->mod->omega_proba[0]     = 0.5;
 		input->mod->omega_proba[1]     = 0.5;
 		input->mod->ns                 = input->mod->c_code->n_sense_c;
@@ -1635,6 +1639,12 @@ char Print_Menu_Codon(option *input, char *s)
 		input->mod->omega[0]           = 0.0;
 		input->mod->omega[1]           = 1.0;
 		input->mod->omega[2]           = 4.0;
+                input->mod->omega_min[0]       = 0.0;
+                input->mod->omega_max[0]       = 20.0;
+                input->mod->omega_min[1]       = 0.0;
+                input->mod->omega_max[1]       = 20.0;
+                input->mod->omega_min[2]       = 0.0;
+                input->mod->omega_max[2]       = 20.0;
 		input->mod->omega_proba[0]     = 0.6;
 		input->mod->omega_proba[1]     = 0.3;
 		input->mod->omega_proba[2]     = 0.1;
@@ -1656,6 +1666,12 @@ char Print_Menu_Codon(option *input, char *s)
 		input->mod->omega[0]           = 0.3;
 		input->mod->omega[1]           = 1.0;
 		input->mod->omega[2]           = 4.0;
+                input->mod->omega_min[0]       = 0.0;
+                input->mod->omega_max[0]       = 20.0;
+                input->mod->omega_min[1]       = 0.0;
+                input->mod->omega_max[1]       = 20.0;
+                input->mod->omega_min[2]       = 0.0;
+                input->mod->omega_max[2]       = 20.0;
 		input->mod->omega_proba[0]     = 0.6;
 		input->mod->omega_proba[1]     = 0.3;
 		input->mod->omega_proba[2]     = 0.1;
@@ -1672,6 +1688,12 @@ char Print_Menu_Codon(option *input, char *s)
 		input->mod->omega[0]           = 0.3;
 		input->mod->omega[1]           = 1.0;
 		input->mod->omega[2]           = 4.0;
+                input->mod->omega_min[0]       = 0.0;
+                input->mod->omega_max[0]       = 20.0;
+                input->mod->omega_min[1]       = 0.0;
+                input->mod->omega_max[1]       = 20.0;
+                input->mod->omega_min[2]       = 0.0;
+                input->mod->omega_max[2]       = 20.0;
 		input->mod->omega_proba[0]     = 0.6;
 		input->mod->omega_proba[1]     = 0.3;
 		input->mod->omega_proba[2]     = 0.1;
@@ -1688,6 +1710,12 @@ char Print_Menu_Codon(option *input, char *s)
 		input->mod->omega[0]           = 0.3;
 		input->mod->omega[1]           = 1.0;
 		input->mod->omega[2]           = 4.0;
+                input->mod->omega_min[0]       = 0.0;
+                input->mod->omega_max[0]       = 20.0;
+                input->mod->omega_min[1]       = 0.0;
+                input->mod->omega_max[1]       = 20.0;
+                input->mod->omega_min[2]       = 0.0;
+                input->mod->omega_max[2]       = 20.0;
 		input->mod->omega_proba[0]     = 0.6;
 		input->mod->omega_proba[1]     = 0.3;
 		input->mod->omega_proba[2]     = 0.1;
@@ -2541,11 +2569,9 @@ void Open_Output_Files(option *input,char *seqfile)
   
   char answer, *file_name;
   int n_trial;
-  int pid;
 
   file_name = (char *)mCalloc(T_MAX_FILE,sizeof(char));
 
-  pid = (int)getpid();
 
   strcpy(input->output_stat_file,input->seqfile);
   strcpy(input->output_tree_file,input->seqfile);
@@ -2561,6 +2587,8 @@ void Open_Output_Files(option *input,char *seqfile)
 #endif
   
 #ifdef EVOLVE
+  int pid;
+  pid = (int)getpid();
   sprintf(input->output_stat_file+strlen(input->output_stat_file),".%d",pid);
   sprintf(input->output_tree_file+strlen(input->output_tree_file),".%d",pid);
   strcat(input->output_stat_file,".evolve_stats");

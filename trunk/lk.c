@@ -1557,8 +1557,16 @@ void Init_Tips(arbre *tree)
       For(i,tree->n_otu)
 	{
 	  For(j,tree->mod->ns) 
-	    tree->noeud[i]->b[0]->p_lk_rght[curr_site/tree->mod->stepsize][0][0][j] = 0.0;
-	  
+	    {
+              /* printf("\n. i=%d j=%d %p %p %p", */
+              /*        i,j, */
+              /*        tree->noeud[i], */
+              /*        tree->noeud[i]->b[0], */
+              /*        tree->noeud[i]->b[0]->p_lk_rght); */
+              /* fflush(NULL); */
+              tree->noeud[i]->b[0]->p_lk_rght[curr_site/tree->mod->stepsize][0][0][j] = 0.0;
+            }
+
 	  switch(tree->mod->datatype)
 	    {
 	    case NT : 
@@ -2107,11 +2115,12 @@ void Compute_Proba_Omega_On_Edges(arbre *tree)
   largest_prob = (fit_double *)mCalloc(2*tree->n_otu-3,sizeof(fit_double));
   fp_w = (FILE **)mCalloc(tree->mod->n_omega,sizeof(FILE *));
 
+
   For(i,tree->mod->n_omega)
     {
       strcpy(s,tree->input->seqfile);
       strcat(s,"_trees_w");
-      sprintf(s+strlen(s)+1,"%d",i+1);
+      sprintf(s+strlen(s),"%d",i+1);
       fp_w[i] = Openfile(s,1);
     }
 
