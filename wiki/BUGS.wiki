@@ -1,3 +1,5 @@
+ * _15 May 2013._ A bug prevented the optimisation of model parameters under model M2. It is now fixed in version 20130604.
+
  * _15 May 2013._ A bug prevented the optimisation of model parameters under M1 and M1a. Also, treeview was not displaying branch colors properly. It is now fixed in version 20130515.
 
  * _11 May 2013._ Another bug prevented the optimisation of model parameters. It is now fixed in version 20130511.
