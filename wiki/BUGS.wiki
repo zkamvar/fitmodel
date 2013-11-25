@@ -1,4 +1,6 @@
 #labels Featured
+ * _25 November 2013._ Windows-formatted sequence files can now be read properly.
+
  * _03 September 2013._ Added example files and updated the README file.
 
  * _06 June 2013._ A bug prevented the optimisation of model parameters under model M2. It is now fixed in version 20130604.
