@@ -1532,7 +1532,6 @@ char Print_Menu_Codon(option *input, char *s)
       }
     case 'C' :
       {
-            
 	if(input->mod->switch_modelname == NO_SWITCH)
 	  {
 	    if(input->mod->subst_modelname == M2)
@@ -1655,6 +1654,7 @@ char Print_Menu_Codon(option *input, char *s)
 	else if((input->mod->switch_modelname == SWITCH_S1) || 
 		(input->mod->switch_modelname == SWITCH_S2))
 	  {
+            
 	    if(input->mod->subst_modelname == M2)
 	      {
 		input->mod->subst_modelname    = M2a;

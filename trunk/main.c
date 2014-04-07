@@ -1865,7 +1865,7 @@ int main(int argc, char **argv)
 }
 
 
-#elif TREEVIEW
+#elif COLTREE
 
 int main(int argc, char **argv) 
 {

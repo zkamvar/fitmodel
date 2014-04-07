@@ -9,7 +9,7 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES])
 
 dnl AC_INIT([PhyML],[beta],[guindon@stat.auckland.ac.nz])
 dnl AC_CONFIG_SRCDIR([simu.c])
-AC_CONFIG_SRCDIR([utilities.c])
+AC_CONFIG_SRCDIR([utilities.c],[example/p1.nxs])
 AC_CONFIG_HEADERS([config.h])
 
 AC_DEFINE([UNIX],[1],[Unix tag on])
@@ -85,14 +85,14 @@ if test "$evolve" = yes; then
    AC_DEFINE([EVOLVE],[1],[EVOLVE tag on])
 fi
 
-AC_ARG_ENABLE([treeview],[AS_HELP_STRING([--enable-treeview],[Compile treeview])],[treeview=yes],[treeview=no])
-AM_CONDITIONAL([WANT_TREEVIEW], [test "$treeview" = yes]) 
-if test "$treeview" = yes; then
-   AC_DEFINE([TREEVIEW],[1],[TREEVIEW tag on])
+AC_ARG_ENABLE([coltree],[AS_HELP_STRING([--enable-coltree],[Compile coltree])],[coltree=yes],[coltree=no])
+AM_CONDITIONAL([WANT_COLTREE], [test "$coltree" = yes]) 
+if test "$coltree" = yes; then
+   AC_DEFINE([COLTREE],[1],[COLTREE tag on])
 fi
 
 
-if test "$treeview" = no; then
+if test "$coltree" = no; then
 if test "$evolve" = no; then
    AC_DEFINE([FITMODEL],[1],[FITMODEL tag on])
 fi

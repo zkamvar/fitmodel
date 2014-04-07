@@ -365,6 +365,10 @@ arbre *Read_Tree(char *s_tree)
       tree->n_root = tree->noeud[2*tree->n_otu-2];
       tree->n_root->num = 2*tree->n_otu-2;
       tree->n_root->tax = 0;
+
+      printf("\n. The input tree must be unrooted!");
+      printf("\n. Err. in file %s at line %d\n",__FILE__,__LINE__);
+      Exit("");
     }
 
   tree->has_branch_lengths = 0;
@@ -1277,18 +1281,42 @@ seq **Read_Seq_Interleaved(FILE *in, int *n_otu)
 
 int Read_One_Line_Seq(seq ***data, int num_otu, FILE *in)
 {
-  /* Core of the sequence reading functions */
+  char c = ' ';
+  int nchar = 0;
 
-  char c;
-
-  c=' ';
   while(1)
     {
-        if((c == EOF) || (c == 13) || (c == 10)) break;
-      else if((c==' ') || (c=='\t')) {c=(char)fgetc(in); continue;}
-      Uppercase(&c);
+/*       if((c == EOF) || (c == '\n') || (c == '\r')) break; */
+
+      if((c == 13) || (c == 10))
+        {
+          /* 	  PhyML_Printf("[%d %d]\n",c,nchar); fflush(NULL); */
+          if(!nchar)
+            {
+              c=(char)fgetc(in);
+              continue;
+            }
+          else
+            {
+              /* 	      PhyML_Printf("break\n");  */
+              break;
+            }
+        }
+      else if(c == EOF)
+        {
+          /* 	  PhyML_Printf("EOL\n"); */
+          break;
+        }
+      else if((c == ' ') || (c == '\t') || (c == 32))
+        {
+          /* 	  PhyML_Printf("[%d]",c); */
+          c=(char)fgetc(in);
+          continue;
+        }
       
-      /*if(strchr("ACGTUMRWSYKBDHVNXO?-.",c) == NULL)*/
+      nchar++;
+      Uppercase(&c);
+ 
       if (strchr("ABCDEFGHIKLMNOPQRSTUVWXY?-.", c) == NULL)
 	{
 	  printf("\n. Err: bad symbol: \"%c\" at position %d of species %s\n",
@@ -1296,17 +1324,20 @@ int Read_One_Line_Seq(seq ***data, int num_otu, FILE *in)
 	  Exit("");
 	}
 
-      if(c == '.')
-	{
-	  c = (*data)[0]->state[(*data)[num_otu]->len];
-	  if(!num_otu) 
-	    Exit("\n. Err: Symbol \".\" should not appear in the first sequence\n");
-	}
+     if(c == '.')
+        {
+          c = (*data)[0]->state[(*data)[num_otu]->len];
+          if(!num_otu)
+            Exit("\n== Err: Symbol \".\" should not appear in the first sequence\n");
+        }
       (*data)[num_otu]->state[(*data)[num_otu]->len]=c;
       (*data)[num_otu]->len++;
-/*       if(c=='U') c='T'; */
       c = (char)fgetc(in);
+      /* PhyML_Printf("[%c %d]",c,c); */
+      if(c == ';') break;
     }
+  
+  /* printf("\n. Exit nchar: %d [%d]\n",nchar,c==EOF); */
   if(c == EOF) return 0;
   else return 1;
 }
@@ -4274,12 +4305,9 @@ void Set_Defaults_Model(model *mod)
   /* Default values of substitution model parameters */
   int i;
 
-  For(i,MMAX(N_MAX_CATQ,N_MAX_OMEGA)) mod->omega_min[i] = 0.001;
+  For(i,MMAX(N_MAX_CATQ,N_MAX_OMEGA)) mod->omega_min[i] = 0.0;
   For(i,MMAX(N_MAX_CATQ,N_MAX_OMEGA)) mod->omega_max[i] = 20.;
-
   
-  
-
   mod->ns                   = 4;
   mod->tpos_ols             = 0;
   mod->update_bl_using_tpos = 0;
@@ -4301,7 +4329,7 @@ void Set_Defaults_Model(model *mod)
   mod->invar                = 0;
   mod->stepsize             = 1;
   mod->codon_freq           = 1;
-  mod->omega[0]             = 0.001;
+  mod->omega[0]             = 0.0;
   mod->omega[1]             = 1.0;
   mod->omega[2]             = 4.0;
   mod->omega_proba[0]       = 0.6;
@@ -6279,7 +6307,7 @@ void Print_Model_Param(arbre *tree)
 
 void Sort_Categories(arbre *tree)
 {
-  int i,j;
+  int i,j,ii,jj;
   double tmp;
 
   if(tree->mod->model_applies_to == CODONS)
@@ -6288,6 +6316,9 @@ void Sort_Categories(arbre *tree)
 	{
 	  if((tree->mod->switch_modelname == SWITCH_S1) || (tree->mod->switch_modelname == SWITCH_S2))
 	    {
+              Lk(tree);
+              printf("\n. Log-likelihood before swap: %f\n",tree->tot_loglk);
+
 	      For(i,tree->mod->n_omega-1)
 		{
 		  for(j=i+1;j<tree->mod->n_omega;j++)
@@ -6295,7 +6326,7 @@ void Sort_Categories(arbre *tree)
 		      if(tree->mod->qmat_struct[0]->omega[j] <
 			 tree->mod->qmat_struct[0]->omega[i])
 			{
-			  printf("\n. Invert %f and %f",
+			  printf("\n. Swap %f and %f",
 				 tree->mod->qmat_struct[0]->omega[j],
 				 tree->mod->qmat_struct[0]->omega[i]);
 
@@ -6323,9 +6354,70 @@ void Sort_Categories(arbre *tree)
 			  tree->mod->qmat_struct[0]->omega_max[j] = 
 			    tree->mod->qmat_struct[0]->omega_max[i];
 			  tree->mod->qmat_struct[0]->omega_max[i] = tmp;
+
+                          
+                          if(tree->mod->switch_modelname == SWITCH_S2)
+                            {
+                              double *buff_theta;
+                              
+                              buff_theta = (double *)mCalloc(tree->mod->n_omega,sizeof(double));
+                              
+                              For(ii,tree->mod->n_omega)
+                                {
+                                  For(jj,tree->mod->n_omega)
+                                    {
+                                      if(ii != jj)
+                                        {
+                                          /* printf("\n. ii: %d jj: %d theta: %f",ii,jj, */
+                                          /*        tree->mod->qmat_struct[0]->theta[MMIN(ii,jj) * tree->mod->n_omega + MMAX(ii,jj) - */
+                                          /*                                         (MMIN(ii,jj)+1+(int)pow(MMIN(ii,jj)+1,2))/2]); */
+                                          
+                                          buff_theta[MMIN(ii,jj) * tree->mod->n_omega + MMAX(ii,jj) -
+                                                     (MMIN(ii,jj)+1+(int)pow(MMIN(ii,jj)+1,2))/2] = 
+                                            tree->mod->qmat_struct[0]->theta[MMIN(ii,jj) * tree->mod->n_omega + MMAX(ii,jj) -
+                                                                             (MMIN(ii,jj)+1+(int)pow(MMIN(ii,jj)+1,2))/2];
+                                        }
+                                    }
+                                }
+
+                              For(ii,tree->mod->n_omega)
+                                {
+                                  For(jj,tree->mod->n_omega)
+                                    {
+                                      if(ii != jj)
+                                        {
+                                          /* printf("\n. ii: %d jj: %d theta: %f",ii,jj, */
+                                          /*        tree->mod->qmat_struct[0]->theta[MMIN(ii,jj) * tree->mod->n_omega + MMAX(ii,jj) - */
+                                          /*                                         (MMIN(ii,jj)+1+(int)pow(MMIN(ii,jj)+1,2))/2]); */
+
+                                          if(ii == i && jj != j)
+                                            {
+                                              tree->mod->qmat_struct[0]->theta[MMIN(ii,jj) * tree->mod->n_omega + MMAX(ii,jj) -
+                                                                               (MMIN(ii,jj)+1+(int)pow(MMIN(ii,jj)+1,2))/2] = 
+                                                buff_theta[MMIN(j,jj) * tree->mod->n_omega + MMAX(j,jj) -
+                                                           (MMIN(j,jj)+1+(int)pow(MMIN(j,jj)+1,2))/2] ;
+                                            }
+                                          
+                                          else if(ii != i && jj == j)
+                                            {                                      
+                                              tree->mod->qmat_struct[0]->theta[MMIN(ii,jj) * tree->mod->n_omega + MMAX(ii,jj) -
+                                                                               (MMIN(ii,jj)+1+(int)pow(MMIN(ii,jj)+1,2))/2] =
+                                                buff_theta[MMIN(ii,i) * tree->mod->n_omega + MMAX(ii,i) -
+                                                           (MMIN(ii,i)+1+(int)pow(MMIN(ii,i)+1,2))/2] ;
+                                            }
+                                          /* printf("\n. ii: %d jj: %d theta: %f",ii,jj, */
+                                          /*        tree->mod->qmat_struct[0]->theta[MMIN(ii,jj) * tree->mod->n_omega + MMAX(ii,jj) - */
+                                          /*                                         (MMIN(ii,jj)+1+(int)pow(MMIN(ii,jj)+1,2))/2]); */
+                                        }
+                                    }
+                                }
+                              free(buff_theta);
+                            }
 			}
 		    }
 		}
+              Lk(tree);
+              printf("\n. Log-likelihood after swap: %f\n",tree->tot_loglk);
 	    }
 	  else if(tree->mod->switch_modelname == NO_SWITCH)
 	    {
@@ -6336,7 +6428,7 @@ void Sort_Categories(arbre *tree)
 		      if(tree->mod->qmat_struct[0]->omega[j] <
 			 tree->mod->qmat_struct[0]->omega[i])
 			{
-			  printf("\n. Invert %f and %f",
+			  printf("\n. Swap %f and %f",
 				 tree->mod->qmat_struct[0]->omega[j],
 				 tree->mod->qmat_struct[0]->omega[i]);
 

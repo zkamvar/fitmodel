@@ -1,5 +1,8 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* COLTREE tag on */
+#undef COLTREE
+
 /* Debug tag on */
 #undef DEBUG
 
@@ -97,9 +100,6 @@
 
 /* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS
-
-/* TREEVIEW tag on */
-#undef TREEVIEW
 
 /* Unix tag on */
 #undef UNIX

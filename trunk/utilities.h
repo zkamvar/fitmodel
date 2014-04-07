@@ -63,8 +63,8 @@ the GNU public licence.  See http://www.opensource.org for details.
 #define PROGNAME "posselsiteid"
 #elif LUMP
 #define PROGNAME "lump"
-#elif TREEVIEW
-#define PROGNAME "treeview"
+#elif COLTREE
+#define PROGNAME "coltree"
 #else
 #define PROGNAME "UNKNOWN"
 #endif
@@ -178,7 +178,7 @@ typedef	float  fit_float;
 #define SIGN(a,b)                    ((b) > 0.0 ? fabs(a) : -fabs(a))
 #define SHFT(a,b,c,d)                (a)=(b);(b)=(c);(c)=(d);
 
-#ifdef TREEVIEW
+#ifdef COLTREE
 struct __Arbre *tree;
 #endif
 
