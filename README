@@ -1,10 +1,25 @@
 
-Install the 'Fitmodel' by typing the following commands in a terminal window:
+
+
+== INSTALATION ==
+
+On UNIX-like operating system (i.e., Mac OS X  and Linux), type the following commands in a terminal
+window:
 
 ./configure;
 make clean;
 make;
 
+In order  to install the program  'coltree' that will help  you visualise the results  of a fitmodel
+analysis, type the following commands:
+
+./configure  --enable-coltree;
+make clean;
+make;
+
+
+
+== DESCRIPTION ==
 
 'Fitmodel' estimates the  parameters of various codon-based models  of substitution, including those
 described in  Guindon, Rodrigo, Dyer and Huelsenbeck  (2004). These models are  especially useful as
@@ -32,14 +47,38 @@ to identify  which of the tree  dN/dS is the most  probable on any give  edge, a
 branch with label  0.0 means that w1  is the most probable class,  0.5 indicates the w2  is the most
 probable and 1.0 means that w3 has the highest posterior probability.
 
-Processing those  results manually  can be  very tedious.  The  program 'treeview'  reads 'fitmodel'
-output file  and generates a postscript  file which displays the  phylogeny at each codon  site with
+Processing  those results  manually can  be very  tedious.  The  program 'coltree'  reads 'fitmodel'
+output file  and generates a postscript  file which displays the  phylogeny at each  codon site with
 different colors on edges depending on the posterior probabilities estimated on each branch, at each
-site (see file p1.pdf).   This is very useful to detect site specific  changes of selection regimes.
-To  compile 'treeview'  on  UNIX-like  systems, simply  type  './configure  --enable-treeview' in  a
-terminal window.  Then type  'make clean' and 'make'. This will generate  the binary for 'treeview'.
-'treeview' is a command-line  program that takes as first argument 'fitmodel'  output tree file. The
-second argument is the name of the postscript file where the trees will be written.
+site (see file p1.pdf).   This is very useful to detect site  specific changes of selection regimes.
+To compile 'coltree' on UNIX-like systems, simply type the following commands in a terminal window:
+
+
+This will generate the binary for 'coltree'. 'coltree' is a command-line program that takes as first
+argument 'fitmodel' output tree  file. The second argument is the name  of the postscript file where
+the trees will be written.
+
+
+== EXAMPLE ==
+
+The directory  example/ contains  a sequence file  (p1.nxs) and  a tree file  (p1.tree) that  can be
+processed  by  fitmodel.  The  files  p1.nxs_fitmodel_stats, p1.nxs_fitmodel_tree,  p1.nxs_trees_w1,
+p1.nxs_trees_w2,  p1.nxs_trees_w3 and  p1.nxs_trees_wbest  were generated  by  'fitmodel' using  the
+M2a+S1 model.  The command line that was used in order to generate those files is the following one:
+
+./fitmodel < param
+
+where 'param'  is a text  file that contains  the series of  letters one have  to enter in  order to
+select the M2a+S1 model (and other options) through the PHYLIP-like interface.
+
+The file 'tree.ps' is  a postscript file that displays the posterior probability  of w1 on each edge
+at each code site of the alignment. It was generated using the following command-line:
+
+./coltree p1.nxs_trees_w1 tree.ps
+
+
+
+====
 
 Need more help? Contact me: s.guindon@auckland.ac.nz
 

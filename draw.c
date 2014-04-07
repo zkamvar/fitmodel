@@ -37,9 +37,12 @@ void Print_Postscript_Header(int n_pages, FILE *fp)
   fprintf(fp,"%%%%DocumentFonts: Times-Roman Times-Roman\n");
   fprintf(fp,"%%%%Creator: Stephane Guindon\n");
   fprintf(fp,"%%%%Title: tree\n");
+
+  // Might conflict with BoundingBox...
   fprintf(fp,"%%%%BeginFeature: *PageSize\n"); 
   fprintf(fp,"a4\n");
   fprintf(fp,"%%%%EndFeature\n");
+
   fprintf(fp,"%%%%EndComments\n");
   fprintf(fp,"%%%%Pages: %d\n",n_pages);
 
@@ -83,7 +86,7 @@ void Print_Postscript_Header(int n_pages, FILE *fp)
 
   y = 600;
   fprintf(fp,"130 %d mt\n",y+3);
-  fprintf(fp,".0 1. 1. sc\n");
+  fprintf(fp,".1 .1 1. sc\n");
   fprintf(fp,"%d %d lt\n",150,y+3);
   fprintf(fp,"160 %d mt\n",y);
   fprintf(fp,"(p < %5.3f) show\n",1./13.);
@@ -91,7 +94,7 @@ void Print_Postscript_Header(int n_pages, FILE *fp)
 
   y = 580;
   fprintf(fp,"130 %d mt\n",y+3);
-  fprintf(fp,".0 1. .8 sc\n");
+  fprintf(fp,".1 .3 1. sc\n");
   fprintf(fp,"%d %d lt\n",150,y+3);
   fprintf(fp,"160 %d mt\n",y);
   fprintf(fp,"(%5.3f < p < %5.3f) show\n",1./13.,2./13.);
@@ -99,7 +102,7 @@ void Print_Postscript_Header(int n_pages, FILE *fp)
 
   y = 560;
   fprintf(fp,"130 %d mt\n",y+3);
-  fprintf(fp,".0 1. .5 sc\n");
+  fprintf(fp,".1 .5 .8 sc\n");
   fprintf(fp,"%d %d lt\n",150,y+3);
   fprintf(fp,"160 %d mt\n",y);
   fprintf(fp,"(%5.3f < p < %5.3f) show\n",2./13.,3./13.);
@@ -107,7 +110,7 @@ void Print_Postscript_Header(int n_pages, FILE *fp)
 
   y = 540;
   fprintf(fp,"130 %d mt\n",y+3);
-  fprintf(fp,".0 1. .3 sc\n");
+  fprintf(fp,".1 .7 .6 sc\n");
   fprintf(fp,"%d %d lt\n",150,y+3);
   fprintf(fp,"160 %d mt\n",y);
   fprintf(fp,"(%5.3f < p < %5.3f) show\n",3./13.,4./13.);
@@ -115,7 +118,7 @@ void Print_Postscript_Header(int n_pages, FILE *fp)
 
   y = 520;
   fprintf(fp,"130 %d mt\n",y+3);
-  fprintf(fp,".0 1. .0 sc\n");
+  fprintf(fp,".1 .9 .4 sc\n");
   fprintf(fp,"%d %d lt\n",150,y+3);
   fprintf(fp,"160 %d mt\n",y);
   fprintf(fp,"(%5.3f < p < %5.3f) show\n",4./13.,5./13.);
@@ -123,7 +126,7 @@ void Print_Postscript_Header(int n_pages, FILE *fp)
 
   y = 500;
   fprintf(fp,"130 %d mt\n",y+3);
-  fprintf(fp,".25 1. .0 sc\n");
+  fprintf(fp,".1 .9 .1 sc\n");
   fprintf(fp,"%d %d lt\n",150,y+3);
   fprintf(fp,"160 %d mt\n",y);
   fprintf(fp,"(%5.3f < p < %5.3f) show\n",5./13.,6./13.);
@@ -131,7 +134,7 @@ void Print_Postscript_Header(int n_pages, FILE *fp)
 
   y = 480;
   fprintf(fp,"130 %d mt\n",y+3);
-  fprintf(fp,".5 1. .0 sc\n");
+  fprintf(fp,".3 .8 .1 sc\n");
   fprintf(fp,"%d %d lt\n",150,y+3);
   fprintf(fp,"160 %d mt\n",y);
   fprintf(fp,"(%5.3f < p < %5.3f) show\n",6./13.,7./13.);
@@ -139,7 +142,7 @@ void Print_Postscript_Header(int n_pages, FILE *fp)
 
   y = 460;
   fprintf(fp,"130 %d mt\n",y+3);
-  fprintf(fp,".75 1. .0 sc\n");
+  fprintf(fp,".5 .8 .2 sc\n");
   fprintf(fp,"%d %d lt\n",150,y+3);
   fprintf(fp,"160 %d mt\n",y);
   fprintf(fp,"(%5.3f < p < %5.3f) show\n",7./13.,8./13.);
@@ -147,7 +150,7 @@ void Print_Postscript_Header(int n_pages, FILE *fp)
 
   y = 440;
   fprintf(fp,"130 %d mt\n",y+3);
-  fprintf(fp,"1. 1. .0 sc\n");
+  fprintf(fp,".7 .7 .2 sc\n");
   fprintf(fp,"%d %d lt\n",150,y+3);
   fprintf(fp,"160 %d mt\n",y);
   fprintf(fp,"(%5.3f < p < %5.3f) show\n",8./13.,9./13.);
@@ -155,7 +158,7 @@ void Print_Postscript_Header(int n_pages, FILE *fp)
 
   y = 420;
   fprintf(fp,"130 %d mt\n",y+3);
-  fprintf(fp,"1. .75 .0 sc\n");
+  fprintf(fp,".8 .6 .2 sc\n");
   fprintf(fp,"%d %d lt\n",150,y+3);
   fprintf(fp,"160 %d mt\n",y);
   fprintf(fp,"(%5.3f < p < %5.3f) show\n",9./13.,10./13.);
@@ -163,7 +166,7 @@ void Print_Postscript_Header(int n_pages, FILE *fp)
 
   y = 400;
   fprintf(fp,"130 %d mt\n",y+3);
-  fprintf(fp,"1. .5 .0 sc\n");
+  fprintf(fp,"1. .5 .3 sc\n");
   fprintf(fp,"%d %d lt\n",150,y+3);
   fprintf(fp,"160 %d mt\n",y);
   fprintf(fp,"(%5.3f < p < %5.3f) show\n",10./13.,11./13.);
@@ -171,10 +174,10 @@ void Print_Postscript_Header(int n_pages, FILE *fp)
 
   y = 380;
   fprintf(fp,"130 %d mt\n",y+3);
-  fprintf(fp,"1. .25 .0 sc\n");
+  fprintf(fp,"1. .25 .3 sc\n");
   fprintf(fp,"%d %d lt\n",150,y+3);
   fprintf(fp,"160 %d mt\n",y);
-  fprintf(fp,"(%5.3f < p < %5.3f) show\n",11./13.,12./13.);
+  fprintf(fp,"(%5.3f < p < %5.3f) show\n",11./13.,0.9);
   fprintf(fp,"stroke\n");
 
   y = 360;
@@ -182,7 +185,7 @@ void Print_Postscript_Header(int n_pages, FILE *fp)
   fprintf(fp,"1. .0 .0 sc\n");
   fprintf(fp,"%d %d lt\n",150,y+3);
   fprintf(fp,"160 %d mt\n",y);
-  fprintf(fp,"(%5.3f < p < %5.3f) show\n",12./13.,13./13.);
+  fprintf(fp,"(%5.3f < p < %5.3f) show\n",0.9,1.0);
 
 
   fprintf(fp,"closepath\n");
@@ -221,31 +224,32 @@ void Print_Tree_Postscript(edge *b_root, FILE *fp, int tree_num, tdraw *w, arbre
   fprintf(fp,"(- site %d -) show\n",tree_num+1);
 
   if(b_root->prob_sel_regime <= min+1.*step)
-    fprintf(fp,".0 1. 1. sc\n");
+  fprintf(fp,".1 .1 1. sc\n");
   else if(b_root->prob_sel_regime > min+1.*step && b_root->prob_sel_regime <= min+2.*step)
-    fprintf(fp,".0 1. .8 sc\n");
+  fprintf(fp,".1 .3 1. sc\n");
   else if(b_root->prob_sel_regime > min+2.*step && b_root->prob_sel_regime <= min+3.*step)
-    fprintf(fp,".0 1. .5 sc\n");
+  fprintf(fp,".1 .5 .8 sc\n");
   else if(b_root->prob_sel_regime > min+3.*step && b_root->prob_sel_regime <= min+4.*step)
-    fprintf(fp,".0 1. .3 sc\n");
+  fprintf(fp,".1 .7 .6 sc\n");
   else if(b_root->prob_sel_regime > min+4.*step && b_root->prob_sel_regime <= min+5.*step)
-    fprintf(fp,".0 1. .0 sc\n");
+  fprintf(fp,".1 .9 .4 sc\n");
   else if(b_root->prob_sel_regime > min+5.*step && b_root->prob_sel_regime <= min+6.*step)
-    fprintf(fp,".25 1. 0. sc\n");
+  fprintf(fp,".1 .9 .1 sc\n");
   else if(b_root->prob_sel_regime > min+6.*step && b_root->prob_sel_regime <= min+7.*step)
-    fprintf(fp,".5 1. 0. sc\n");
+  fprintf(fp,".3 .8 .1 sc\n");
   else if(b_root->prob_sel_regime > min+7.*step && b_root->prob_sel_regime <= min+8.*step)
-    fprintf(fp,".75 1. .0 sc\n");
+  fprintf(fp,".5 .8 .2 sc\n");
   else if(b_root->prob_sel_regime > min+8.*step && b_root->prob_sel_regime <= min+9.*step)
-    fprintf(fp,"1. 1. .0 sc\n");
+  fprintf(fp,".7 .7 .2 sc\n");
   else if(b_root->prob_sel_regime > min+9.*step && b_root->prob_sel_regime <= min+10.*step)
-    fprintf(fp,"1. .75 .0 sc\n");
+  fprintf(fp,".8 .6 .2 sc\n");
   else if(b_root->prob_sel_regime > min+10.*step && b_root->prob_sel_regime <= min+11.*step)
-    fprintf(fp,"1. .5 .0 sc\n");
-  else if(b_root->prob_sel_regime > min+11.*step && b_root->prob_sel_regime <= min+12.*step)
-    fprintf(fp,"1. .25 .0 sc\n");
-  else if(b_root->prob_sel_regime > min+12.*step && b_root->prob_sel_regime <= min+13.*step)
-    fprintf(fp,"1. .0 0. sc\n");
+  fprintf(fp,"1. .5 .3 sc\n");
+  else if(b_root->prob_sel_regime > min+11.*step && b_root->prob_sel_regime <= 0.9)
+  fprintf(fp,"1. .25 .3 sc\n");
+  /* else if(b_root->prob_sel_regime > min+12.*step && b_root->prob_sel_regime <= min+13.*step) */
+  else if(b_root->prob_sel_regime > 0.9 && b_root->prob_sel_regime <= 1.0)
+  fprintf(fp,"1. .0 .0 sc\n");
   
   
   fprintf(fp,"%d %d mt\n",w->xcoord[b_root->left->num],w->ycoord[b_root->left->num]);
@@ -304,32 +308,34 @@ void Print_Tree_Postscript_Pre(node *a, node *d, FILE *fp, tdraw *w, arbre *tree
   For(i,3)
     if(a->v[i] == d)
       {       
-	 if(a->b[i]->prob_sel_regime <= min+1.*step)
-	  fprintf(fp,".0 1. 1. sc\n");
-	else if(a->b[i]->prob_sel_regime > min+1.*step && a->b[i]->prob_sel_regime <= min+2.*step)
-	  fprintf(fp,".0 1. .8 sc\n");
-	else if(a->b[i]->prob_sel_regime > min+2.*step && a->b[i]->prob_sel_regime <= min+3.*step)
-	  fprintf(fp,".0 1. .5 sc\n");
-	else if(a->b[i]->prob_sel_regime > min+3.*step && a->b[i]->prob_sel_regime <= min+4.*step)
-	  fprintf(fp,".0 1. .3 sc\n");
-	else if(a->b[i]->prob_sel_regime > min+4.*step && a->b[i]->prob_sel_regime <= min+5.*step)
-	  fprintf(fp,".0 1. .0 sc\n");
-	else if(a->b[i]->prob_sel_regime > min+5.*step && a->b[i]->prob_sel_regime <= min+6.*step)
-	  fprintf(fp,".25 1. 0. sc\n");
-	else if(a->b[i]->prob_sel_regime > min+6.*step && a->b[i]->prob_sel_regime <= min+7.*step)
-	  fprintf(fp,".5 1. 0. sc\n");
-	else if(a->b[i]->prob_sel_regime > min+7.*step && a->b[i]->prob_sel_regime <= min+8.*step)
-	  fprintf(fp,".75 1. .0 sc\n");
-	else if(a->b[i]->prob_sel_regime > min+8.*step && a->b[i]->prob_sel_regime <= min+9.*step)
-	  fprintf(fp,"1. 1. .0 sc\n");
-	else if(a->b[i]->prob_sel_regime > min+9.*step && a->b[i]->prob_sel_regime <= min+10.*step)
-	  fprintf(fp,"1. .75 .0 sc\n");
-	else if(a->b[i]->prob_sel_regime > min+10.*step && a->b[i]->prob_sel_regime <= min+11.*step)
-	  fprintf(fp,"1. .5 .0 sc\n");
-	else if(a->b[i]->prob_sel_regime > min+11.*step && a->b[i]->prob_sel_regime <= min+12.*step)
-	  fprintf(fp,"1. .25 .0 sc\n");
-	else if(a->b[i]->prob_sel_regime > min+12.*step && a->b[i]->prob_sel_regime <= min+13.*step)
-	  fprintf(fp,"1. .0 0. sc\n");
+  if(a->b[i]->prob_sel_regime <= min+1.*step)
+  fprintf(fp,".1 .1 1. sc\n");
+  else if(a->b[i]->prob_sel_regime > min+1.*step && a->b[i]->prob_sel_regime <= min+2.*step)
+  fprintf(fp,".1 .3 1. sc\n");
+  else if(a->b[i]->prob_sel_regime > min+2.*step && a->b[i]->prob_sel_regime <= min+3.*step)
+  fprintf(fp,".1 .5 .8 sc\n");
+  else if(a->b[i]->prob_sel_regime > min+3.*step && a->b[i]->prob_sel_regime <= min+4.*step)
+  fprintf(fp,".1 .7 .6 sc\n");
+  else if(a->b[i]->prob_sel_regime > min+4.*step && a->b[i]->prob_sel_regime <= min+5.*step)
+  fprintf(fp,".1 .9 .4 sc\n");
+  else if(a->b[i]->prob_sel_regime > min+5.*step && a->b[i]->prob_sel_regime <= min+6.*step)
+  fprintf(fp,".1 .9 .1 sc\n");
+  else if(a->b[i]->prob_sel_regime > min+6.*step && a->b[i]->prob_sel_regime <= min+7.*step)
+  fprintf(fp,".3 .8 .1 sc\n");
+  else if(a->b[i]->prob_sel_regime > min+7.*step && a->b[i]->prob_sel_regime <= min+8.*step)
+  fprintf(fp,".5 .8 .2 sc\n");
+  else if(a->b[i]->prob_sel_regime > min+8.*step && a->b[i]->prob_sel_regime <= min+9.*step)
+  fprintf(fp,".7 .7 .2 sc\n");
+  else if(a->b[i]->prob_sel_regime > min+9.*step && a->b[i]->prob_sel_regime <= min+10.*step)
+  fprintf(fp,".8 .6 .2 sc\n");
+  else if(a->b[i]->prob_sel_regime > min+10.*step && a->b[i]->prob_sel_regime <= min+11.*step)
+  fprintf(fp,"1. .5 .3 sc\n");
+  else if(a->b[i]->prob_sel_regime > min+11.*step && a->b[i]->prob_sel_regime <= 0.9)
+  fprintf(fp,"1. .25 .3 sc\n");
+  /* else if(a->b[i]->prob_sel_regime > min+12.*step && a->b[i]->prob_sel_regime <= min+13.*step) */
+  else if(a->b[i]->prob_sel_regime > 0.9 && a->b[i]->prob_sel_regime <= 1.0)
+  fprintf(fp,"1. .0 .0 sc\n");
+
 	break;
       }
 
